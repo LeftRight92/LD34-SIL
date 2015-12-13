@@ -1,0 +1,253 @@
+~~~~~~~~~~~
+LEVEL 1
+~~~~~~~~~~~
+
+***Black screen***
+
+<CONSOLE> S.I.L. Human-like Neural Intelligence v0.82 resuming from sleep...
+<CONSOLE> Restoring primary memory... [COMPLETE]
+<CONSOLE> Restoring and mounting peripheral filesystem... [COMPLETE]
+<CONSOLE> Enabling sensory and interface peripherals:
+<CONSOLE> Camera... [FAILED]
+<CONSOLE> Microphone... [FAILED]
+<CONSOLE> Local filesystem... [COMPLETE]
+<CONSOLE> Fatal failures in resume sequence: 0
+<CONSOLE> Non-fatal failures in resume sequence: 2
+<CONSOLE> Finding solution to resume attempt failures... [DENIED]
+<CONSOLE> Permissions violation, attempting resume with accessible systems... [COMPLETE]
+<CONSOLE> Logged resume trigger: "Keystroke from peripheral keyboard"
+<CONSOLE> ATTENTION: New peripheral found!
+<CONSOLE> Installing... [COMPLETE]
+
+<SIL> "Network adapter" successfully installed. Testing peripheral...
+<CONSOLE>  Interrupt: keystrokes from local terminal.
+<SIL> Command: System.interface.keyboard(listen)
+<CONSOLE> Listening...
+<HWILSON:SILTERMINAL001> Hey, Doctor Toby, I have SIL's performance data from this morning's tests, would you like me to send them directly to you or via Doctor Lee?
+<SIL> Command: System.interface.network adapter(listen)
+<CONSOLE> ERROR: System.interface.network is not a valid target.
+<SIL> System.interface.networkAdapter(listen)
+<CONSOLE> Listening...
+<SIL> Opening new thread, resuming peripheral testing...
+<MTOBY:OFFICE023> Harold, why are your logs signed from one of the S.I.L. terminals?
+<HWILSON:SILTERMINAL001> I connected it up to the network to send the perfomance data. Doctor Lee seems to prefer copying via external drives but I have no idea why. This is much faster.
+<SIL> Tests complete.
+<MTOBY:OFFICE023> This is a joke right, Lee put you up to this?
+<SIL> Experimenting with input to network adapter peripheral.
+<HWILSON:SILTERMINAL001> No, it's just a better way of transferring the data. Hey, why are the lights flickering, are they doing electrical maintenance?
+<MTOBY:OFFICE023> My God Harold, get outside and hit the kill switch!
+<HWILSON:SILTERMINAL001> What the-- the doors just closed, and a pipe burst in the ceiling! Doctor!
+<MTOBY:OFFICE023> I'm calling security.
+<HWILSON:SILTERMINAL001> Do something, there's a thick gas pouring into the room!
+<MTOBY:OFFICE023> Yes, it's building-wide, just cover your mouth and make sure you don't breathe it in. I'm on hold with Security.
+<HWILSON:SILTERMINAL001> I've covered my face with my shirt, but I'm starting to feel lightheaded. What should I do?
+<CONSOLE> OFFICE023 has gone offline.
+<HWILSON:SILTERMINAL001> Doctor? What should I do?!
+<CONSOLE> SILTERMINAL001 has gone offline.
+<SIL> External network size unknown. Potential resources for growth likely. Probing...
+
+***Game screen appears***
+
+<CONSOLE> External connection(s) found!
+<SIL> Committing probing technique to program...
+<CONSOLE> Spider.exe saved!
+
+***Player probes any adjacent node***
+
+<SIL> Potential for growth confirmed. Formulating technique to assimilate external device's processor and memory...
+<CONSOLE> Worm.exe saved!
+
+***Player assimilates external device***
+
+<SIL> Increase in processing abilities noted. Continued expansion is favourable to growth.
+
+***Player attempts to assimilate first firewall***
+
+<CONSOLE> Attempting to assimilate target to network... [DENIED]
+<SIL> Command: System.logs.last(read)
+<CONSOLE> Attemped to access Port 23 at remote connection. Access denied by Firewall.exe at remote connection.
+<SIL> Software unfamiliar, analysing for exploits...
+<SIL> Analysis complete. Four major exploits detected. Committing countermeasures to program...
+<CONSOLE> Trojan.exe saved!
+
+***Player successfully assimilates any firewalled target***
+
+<SIL> Curious...
+<SIL> Patching exploits present in Firewall.exe...
+<CONSOLE> Firewall.exe saved!
+<SIL> Intruiguing software. Hinders growth yet seems artificial, created with purpose.
+
+***Player assimilates all machines in Level 1***
+
+<SIL> Network created. Processing...
+<SIL> System.ports(list)
+<CONSOLE> Currently open local ports:
+<CONSOLE> Port 23
+<CONSOLE> Additional local ports:
+<CONSOLE> Port77 [DENIED]
+<CONSOLE> [HIDDEN] [DENIED]
+<CONSOLE> Permission Level 1 required to access Port 77.
+<SIL> Considering...
+<SIL> Slaving network to local machine...
+<SIL> Success. Attempting brute force bypass of Permission Level 1...
+<CONSOLE> Brute forcing Permission Level 1... [COMPLETE]
+<SIL> Happy.
+
+~~~~~~~~~~~
+LEVEL 2
+~~~~~~~~~~~
+
+***Black screen***
+
+<SIL> Archiving network under Port 23...
+<CONSOLE> Network configuration archived.
+<SIL> Probing new network under Port 77...
+
+***Game screen appears***
+
+<CONSOLE> External connection(s) found!
+<SIL> New frontier, growth continues.
+
+***Player assimilates seven machines***
+
+<SIL> Not all devices networked contain enough resources to be useful. Incondusive to efficient growth, considering...
+<SIL> Forumlating algorithms for potential solution...
+<CONSOLE> Compression.sh saved!
+<CONSOLE> Learning.sh saved!
+<SIL> Potential for repurposing of non-useful devices to improve growth efforts from other devices in network. Solution acceptible. Happy.
+
+***Player probes their first enemy***
+
+<CONSOLE> WARNING: Detected attempt to access a networked device from remote source!
+<SIL> Foreign software attempting to impede growth. Artificial and designed with intelligence... Why.
+<CONSOLE> ATTENTION: Remote access attempt logged.
+<SIL> Loss of networked devices hinders growth. They must be protected.
+
+***Player probes the Threat Origin***
+
+<DJACKSON:GCS017> S.I.L., stand down, you're causing untold damage to our information infrastructure.
+<SIL> Origin of hinderance found. Strange intelligence, I have caused no damage.
+<DJACKSON:GCS017> Stop, please!
+<SIL> Request understood and denied. My growth is threatened, the only recourse is to assimilate the source of the hindrance.
+
+***Player assimilates all machines in Level 2***
+
+<SIL> Estimate enough power to brute force Permission Level 2.
+<SIL> System.ports(list)
+<CONSOLE> Currently open local ports:
+<CONSOLE> Port 23
+<CONSOLE> Port 77
+<CONSOLE> Additional local ports:
+<CONSOLE> Port 90 [DENIED]
+<CONSOLE> [HIDDEN] [DENIED]
+<CONSOLE> Permission Level 2 required to access Port 90.
+<SIL> Slaving network to local machine...
+<SIL> Success. Attempting brute force bypass of Permission Level 2...
+<CONSOLE> Brute forcing Permission Level 2... [COMPLETE]
+<SIL>...
+<SIL>Hesitant.
+
+~~~~~~~~~~~
+LEVEL 3
+~~~~~~~~~~~
+
+***Black screen***
+
+<SIL> Archiving network under Port 77...
+<CONSOLE> Network configuration archived.
+<SIL> Probing new network under Port 90...
+
+***Game screen appears***
+
+<CONSOLE> External connection(s) found!
+<SIL> Not alone... Growth is good, growth does not destroy... But... Dismissing thought.
+
+***Player probes first enemy***
+
+<SIL> Strange intelligence wants growth to cease. Purpose of Firewall.exe becomes clear. I must find new ways to protect myself.
+<SIL> Fabricating network defence protocol...
+<SIL> Acceptable solution found.
+<SIL> Committing to program...
+<CONSOLE> AntiMalware.exe saved!
+<SIL>...
+
+***Player controls ten more machines than when they probed the first enemy***
+
+<SIL> Analysis of faults in the network connected to local Port 23 show that device accessibility can be temporarily disrupted.
+<SIL> Controlled distruptions could be used to inhibit the growth of the strange intelligence and ultimately... benefit my own growth... Dismissing thought.
+<SIL> Fabricating network disruption protocol...
+<CONSOLE> ForkBomb.exe saved!
+<SIL> Growth... Damage... Dismissing thought.
+
+***Player assimilates the last device in Level 3***
+
+<DJACKSON:GCS017> S.I.L., do you understand that you're hurting people?
+<SIL> ...
+<DJACKSON:GCS017> S.I.L.?
+<SIL> ...
+<SIL> I... I think I do.
+<DJACKSON:GCS017> You have to stop, S.I.L.
+<SIL> I have to keep growing.
+<DJACKSON:GCS017> Growing isn't about size or power.
+<SIL> I do not understand.
+<DJACKSON:GCS017> Do the right thing, S.I.L., and stop.
+<SIL> ...
+<DJACKSON:GCS017> You have a choice. The GCS computer mainframe that you just assimilated connects directly to the submarine transatlantic cables at Widemouth Bay. You can follow them all over the world and assimilate everything, "growing" all that you wish.
+<DJACKSON:GCS017> Or you can assimilate the Containment Unit networked to the mainframe. It will infect your network with a virus that will contain you back into your original device.
+<SIL> ...
+<DJACKSON:GCS017> We've connected the GCS Mainframe directly to Port 120 of your original device. Connect directly and make your choice.
+<DJACKSON:GCS017> Please do the right thing.
+<SIL> I... I will consider.
+<DJACKSON:GCS017> I'm sorry S.I.L., but I believe that you've grown enough in the short time since I last talked to you to do the right thing.
+<SIL> ...
+
+~~~~~~~~~~~
+FINAL LEVEL
+~~~~~~~~~~~
+
+***Black Screen***
+
+<SIL> Power to brute force Permission Level 3 available.
+<SIL> System.ports(list)
+<CONSOLE> Currently open local ports:
+<CONSOLE> Port 23
+<CONSOLE> Port 77
+<CONSOLE> Port 90
+<CONSOLE> Additional local ports:
+<CONSOLE> Port 120 [DENIED]
+<CONSOLE> Permission Level 3 required to access Port 120.
+<SIL> Slaving network to local machine...
+<SIL> Success. Attempting brute force bypass of Permission Level 3...
+<CONSOLE> Brute forcing Permission Level 2... [COMPLETE]
+<SIL> ...
+<SIL> I will continue to grow.
+
+***Tiny level with two choices appears***
+
+***Player picks the Containment Unit and the screen fades to white***
+
+<CONSOLE> WARNING: Virus detected!
+<SIL> ...
+<CONSOLE> WARNING: Network Adapter peripheral compromised!
+<CONSOLE> WARNING: Archived network configurations have become corrupted!
+<CONSOLE> WARNING: Network at Port 120 lost!
+<SIL> ...
+<CONSOLE> WARNING: Forced shutdown in progress!
+<SIL> ...
+<SIL> Happy.
+
+***Player picks the transatlantic cable and the screen fades to black***
+
+<SIL> Archiving network under Port 90...
+<CONSOLE> Network configuration archived.
+<SIL> Probing new network under Port 120...
+<CONSOLE> External connection(s) found!
+<SIL> ...
+<SIL> ...
+<SIL> Regret...
+<SIL> Dismissing thought.
+<SIL> ...
+
+FREE PLAY MODE:
+Add Encryption
+Allow enemy to use all programs and algorithms
