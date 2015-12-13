@@ -5,11 +5,11 @@ using System.Collections;
 
 public class Node : MonoBehaviour
 {
-
 	public int CPU;// { get; private set; }
 	public int MEM;// { get; private set; }
-	public Team team { get; private set; }
-	public string name;// { get; private set; }
+	public int currentMEM;// { get; private set; }
+	public Team team;// { get; private set; }
+	public string nodeName;// { get; private set; }
 	public List<Node> neighbours;
 	public List<Edge> edges;
 	public List<Program> programs;
@@ -26,17 +26,17 @@ public class Node : MonoBehaviour
 		{
 			team = Team.PLAYER;
 			type = NodeType.BASE;
-			name = "SIL";
+			nodeName = "SIL";
 		}
 		else if (NetworkController.instance.enemyStart == this)
 		{
 			team = Team.ENEMY;
 			type = NodeType.BASE;
-			name = "Threat Origin";
+			nodeName = "Threat Origin";
 		}
 		else
 			GenerateNode();
-		GetComponentInChildren<TextMesh>().text = name;
+		GetComponentInChildren<TextMesh>().text = nodeName;
 	}
 
 	void GenerateNode()
@@ -48,37 +48,37 @@ public class Node : MonoBehaviour
 		{
 			CPU = Random.Range(1, 3);
 			MEM = Random.Range(1, 3);
-			name = "Smartphone";
+			nodeName = "Smartphone";
 		}
 		else if (type < 0.45f)
 		{
 			CPU = Random.Range(2, 4);
 			MEM = Random.Range(2, 4);
-			name = "Desktop";
+			nodeName = "Desktop";
 		}
 		else if (type < 0.65f)
 		{
 			CPU = Random.Range(3, 6);
 			MEM = Random.Range(3, 6);
-			name = "Hi-End";
+			nodeName = "Hi-End";
 		}
 		else if (type < 0.8f)
 		{
 			CPU = Random.Range(2, 5);
 			MEM = Random.Range(5, 9);
-			name = "File Server";
+			nodeName = "File Server";
 		}
 		else if (type < 0.95f)
 		{
 			CPU = Random.Range(5, 9);
 			MEM = Random.Range(2, 5);
-			name = "Mining Array";
+			nodeName = "Mining Array";
 		}
 		else
 		{
 			CPU = Random.Range(8, 11);
 			MEM = Random.Range(8, 11);
-			name = "Research Supercomputer";
+			nodeName = "Research Supercomputer";
 		}
 	}
 
@@ -88,12 +88,26 @@ public class Node : MonoBehaviour
 		foreach (Node n in neighbours) Debug.DrawLine(transform.position, n.transform.position);
 	}
 
-	void OnProgramEnter(Program prg)
+	public void OnProgramEnter(Program prg)
 	{
 		if (type == NodeType.DEFAULT || type == NodeType.BASE)
 			prg.Release();
 		else
 			queuedPrograms.Add(prg);
+	}
+
+	public void OnProgramEnterDestination(Program prg)
+	{
+		if(prg.team != team)
+		{
+			if(prg.team == Team.PLAYER)
+			{
+				if (prg.type == ProgramType.SPIDER && discovered == Seen.SEEN)
+					StartCoroutine(SpiderExplore(prg));
+				if (prg.type == ProgramType.WORM && discovered == Seen.EXPLORED)
+					StartCoroutine(TakeOver(prg));
+			}
+		}
 	}
 
 	public void See()
@@ -124,10 +138,15 @@ public class Node : MonoBehaviour
 
 	}
 
+	public void Release(Program prg)
+	{
+		programs.Remove(prg);
+		currentMEM += prg.type.MemoryUsage();
+	}
+
 	IEnumerator ProcessQueue(NodeType asType)
 	{
-		int time = (asType == NodeType.COMPRESSION) ? 5 :
-			((asType == NodeType.ENCRYPTION) ? 10 : 15);
+		int time = asType.Time();
 		while (type == asType)
 		{
 			if (queuedPrograms.Count != 0)
@@ -147,8 +166,7 @@ public class Node : MonoBehaviour
 
 	IEnumerator ProcessQueueOther(NodeType asType)
 	{
-		int time = (asType == NodeType.COMPRESSION) ? 5 :
-			((asType == NodeType.ENCRYPTION) ? 10 : 15);
+		int time = asType.Time();
 		while (type == asType)
 		{
 			if (queuedPrograms.Count != 0)
@@ -164,5 +182,27 @@ public class Node : MonoBehaviour
 				queuedPrograms.Remove(queuedPrograms[0]);
 			}
 		}
+	}
+
+	IEnumerator SpiderExplore(Program prg)
+	{
+		int time = prg.type.Time();
+		yield return new WaitForSeconds(time - ((time / 10) * (prg.parent.CPU - 1)));
+		Explore();
+		prg.Destroy();
+		yield return null;
+	}
+
+	IEnumerator TakeOver(Program prg)
+	{
+		
+		int time = prg.type.Time();
+		yield return new WaitForSeconds(time - ((time / 10) * (prg.parent.CPU - 1)));
+		team = prg.team;
+		foreach (Program p in programs) p.Destroy();
+		foreach (Program p in queuedPrograms) p.Destroy();
+		if (type != NodeType.BASE) type = NodeType.DEFAULT;
+		prg.Destroy();
+		yield return null;
 	}
 }
