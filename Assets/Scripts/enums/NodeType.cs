@@ -6,8 +6,6 @@ public enum NodeType {
 	COMPRESSION,
 	LEARNING_ALGORITHM,
 	ENCRYPTION,
-	FIREWALL, //
-	FIREWALLBASE, //
 	BASE
 }
 

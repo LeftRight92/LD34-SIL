@@ -5,87 +5,59 @@ using System.Collections;
 
 public class Node : MonoBehaviour
 {
-	public int CPU;// { get; private set; }
-	public int MEM;// { get; private set; }
-	public int currentMEM;// { get; private set; }
+	public string nodeName { get; private set; }
 	public Team team;// { get; private set; }
-	public string nodeName;// { get; private set; }
+	public Seen discovered = Seen.UNDISCOVERED;
+	public NodeType type = NodeType.DEFAULT;
+
+	public int CPU { get; private set; }
+	public int MEM { get; private set; }
+	public int currentMEM { get; private set; }
+	public bool canBuild = true;
+	public float buildCooldown = 0;
+	public bool hasFirewall = false;
+	
 	public List<Node> neighbours;
 	public List<Edge> edges;
 	public List<Program> programs;
 	public List<Program> queuedPrograms;
-	public Seen discovered = Seen.UNDISCOVERED;
-	public NodeType type = NodeType.DEFAULT;
+
+
 
 	// Use this for initialization
 	void Start()
 	{
-		CPU = 3;
-		MEM = 3;
-		if (NetworkController.instance.playerStart == this)
-		{
-			team = Team.PLAYER;
-			type = NodeType.BASE;
-			nodeName = "SIL";
-		}
-		else if (NetworkController.instance.enemyStart == this)
-		{
-			team = Team.ENEMY;
-			type = NodeType.BASE;
-			nodeName = "Threat Origin";
-		}
-		else
-			GenerateNode();
+		GenerateNode();
 		GetComponentInChildren<TextMesh>().text = nodeName;
+		currentMEM = MEM;
 	}
 
 	void GenerateNode()
 	{
-		team = Team.NONE;
-		float type = Random.value;
-		type = Mathf.Pow(type, 2);
-		if (type < 0.25f)
-		{
-			CPU = Random.Range(1, 3);
-			MEM = Random.Range(1, 3);
-			nodeName = "Smartphone";
-		}
-		else if (type < 0.45f)
-		{
-			CPU = Random.Range(2, 4);
-			MEM = Random.Range(2, 4);
-			nodeName = "Desktop";
-		}
-		else if (type < 0.65f)
-		{
-			CPU = Random.Range(3, 6);
-			MEM = Random.Range(3, 6);
-			nodeName = "Hi-End";
-		}
-		else if (type < 0.8f)
-		{
-			CPU = Random.Range(2, 5);
-			MEM = Random.Range(5, 9);
-			nodeName = "File Server";
-		}
-		else if (type < 0.95f)
-		{
-			CPU = Random.Range(5, 9);
-			MEM = Random.Range(2, 5);
-			nodeName = "Mining Array";
-		}
+		NodeStats node;
+		if (NetworkController.instance.playerStart == this)
+			node = NodeGenerator.GetPlayerNode();
+		else if (NetworkController.instance.enemyStart == this)
+			node = NodeGenerator.GetEnemyNode();
 		else
-		{
-			CPU = Random.Range(8, 11);
-			MEM = Random.Range(8, 11);
-			nodeName = "Research Supercomputer";
-		}
-	}
+			node = NodeGenerator.GenerateNodeStats();
+		team = node.team;
+		type = node.type;
+		CPU = node.CPU;
+		MEM = node.MEM;
+		name = node.name;
+    }
 
 	// Update is called once per frame
 	void Update()
 	{
 		foreach (Node n in neighbours) Debug.DrawLine(transform.position, n.transform.position);
+		if ((type == NodeType.DEFAULT || type == NodeType.BASE) 
+			&& !canBuild)
+		{
+			buildCooldown -= Time.deltaTime;
+			if (buildCooldown < 0) canBuild = true;
+		}
 	}
 
 	public void OnProgramEnter(Program prg)
@@ -98,16 +70,7 @@ public class Node : MonoBehaviour
 
 	public void OnProgramEnterDestination(Program prg)
 	{
-		if(prg.team != team)
-		{
-			if(prg.team == Team.PLAYER)
-			{
-				if (prg.type == ProgramType.SPIDER && discovered == Seen.SEEN)
-					StartCoroutine(SpiderExplore(prg));
-				if (prg.type == ProgramType.WORM && discovered == Seen.EXPLORED)
-					StartCoroutine(TakeOver(prg));
-			}
-		}
+		//SOME STUFF
 	}
 
 	public void See()
@@ -133,18 +96,92 @@ public class Node : MonoBehaviour
 		GetComponent<Collider2D>().enabled = false;
 	}
 
-	public void Create(ProgramType type)
+	public void CreateFirewall()
 	{
+		if ((type == NodeType.DEFAULT || type == NodeType.BASE) && canBuild&& currentMEM > 3)
+		{
+			currentMEM -= 3;
+			hasFirewall = true;
+		}
+	}
 
+	public void BreakFirewall()
+	{
+		hasFirewall = false;
+		currentMEM += 3;
+		buildCooldown = Mathf.Max(
+			buildCooldown,
+			15 - (1.5f * (CPU - 1))
+			);
+		canBuild = false;
+	}
+
+	public void RunAlgorithm(NodeType type)
+	{
+		if (this.type == NodeType.BASE || type == NodeType.BASE) return;
+		//Consider expression...may not be ideal.
+		if (type == NodeType.DEFAULT && this.type != NodeType.DEFAULT)
+		{
+			currentMEM = MEM;
+			canBuild = true;
+			this.type = type;
+		}
+		else
+		{
+			foreach (Program p in programs)
+				p.Destroy();
+			currentMEM = 0;
+			canBuild = false;
+			this.type = type;
+		}
+	}
+
+	public void Create(ProgramType type, Node[] path)
+	{
+		if (type == ProgramType.ANTIMALWARE)
+			CreateAntiMalware();
+		else if ((this.type == NodeType.DEFAULT || this.type == NodeType.BASE)
+				&& canBuild&& (MEM - type.MemoryUsage()) > 0)
+		{
+			GameObject progObj = Instantiate(type.GetPrefab(), transform.position, Quaternion.identity) as GameObject;
+			Program prg = progObj.GetComponent<Program>();
+			prg.parent = this;
+			prg.destination = path[path.Length - 1];
+			prg.path = path.ToList();
+			prg.team = team;
+			prg.Release();
+			currentMEM -= type.MemoryUsage();
+			canBuild = false;
+			buildCooldown = Mathf.Max(buildCooldown, type.BuildCooldown(CPU));
+		}
+	}
+
+	public void CreateAntiMalware()
+	{
+		if ((type == NodeType.DEFAULT || this.type == NodeType.BASE)
+				   && canBuild && (MEM - ProgramType.ANTIMALWARE.MemoryUsage()) > 0)
+		{
+			GameObject progObj = Instantiate(ProgramType.ANTIMALWARE.GetPrefab(), transform.position, Quaternion.identity) as GameObject;
+			Program prg = progObj.GetComponent<Program>();
+			prg.parent = this;
+			prg.team = team;
+			prg.Release();
+			currentMEM -= ProgramType.ANTIMALWARE.MemoryUsage(); 
+		}
 	}
 
 	public void Release(Program prg)
 	{
 		programs.Remove(prg);
 		currentMEM += prg.type.MemoryUsage();
+		if(prg.type == ProgramType.ANTIMALWARE)
+		{
+			canBuild = false;
+			buildCooldown = Mathf.Max(buildCooldown, prg.type.BuildCooldown(CPU));
+		}
 	}
 
-	IEnumerator ProcessQueue(NodeType asType)
+	IEnumerator ProcessQueueOther(NodeType asType)
 	{
 		int time = asType.Time();
 		while (type == asType)
@@ -164,7 +201,7 @@ public class Node : MonoBehaviour
 		}
 	}
 
-	IEnumerator ProcessQueueOther(NodeType asType)
+	IEnumerator ProcessQueue(NodeType asType)
 	{
 		int time = asType.Time();
 		while (type == asType)
@@ -184,25 +221,10 @@ public class Node : MonoBehaviour
 		}
 	}
 
-	IEnumerator SpiderExplore(Program prg)
+	IEnumerator BeginCooldown(float time)
 	{
-		int time = prg.type.Time();
-		yield return new WaitForSeconds(time - ((time / 10) * (prg.parent.CPU - 1)));
-		Explore();
-		prg.Destroy();
-		yield return null;
-	}
-
-	IEnumerator TakeOver(Program prg)
-	{
-		
-		int time = prg.type.Time();
-		yield return new WaitForSeconds(time - ((time / 10) * (prg.parent.CPU - 1)));
-		team = prg.team;
-		foreach (Program p in programs) p.Destroy();
-		foreach (Program p in queuedPrograms) p.Destroy();
-		if (type != NodeType.BASE) type = NodeType.DEFAULT;
-		prg.Destroy();
-		yield return null;
+		canBuild = false;
+		yield return new WaitForSeconds(time);
+		canBuild = true;
 	}
 }

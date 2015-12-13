@@ -2,18 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Program : MonoBehaviour {
+public abstract class Program : MonoBehaviour {
 
 	public Node parent;
 	public Node destination;
 	public List<Node> path;
 
 	public Team team;// { get; private set; }
-	public ProgramType type;// { get; private set; }
+	public ProgramType type { get; protected set; }
 
-	public int compressionLevel;
-	public int learningLevel;
-	public int encryptionLevel;
+	public int compressionLevel = 0;
+	public int learningLevel = 0;
+	public int encryptionLevel = 0;
 
 	public int speed;
 
@@ -21,11 +21,6 @@ public class Program : MonoBehaviour {
 	void Start () {
 		//TEMPORARY
 		Release();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	void Appear()
@@ -46,9 +41,23 @@ public class Program : MonoBehaviour {
 
 	public void Destroy()
 	{
-		Debug.Log("Pop");
 		parent.Release(this);
 		Destroy(gameObject);
+	}
+
+	public void IncreaseCompression()
+	{
+
+	}
+
+	public void IncreaseLearning()
+	{
+
+	}
+
+	public void IncreaseEncryption()
+	{
+
 	}
 
 	IEnumerator Move()
@@ -69,8 +78,10 @@ public class Program : MonoBehaviour {
 		path.Remove(currentDestination);
 		Disappear();
 		if (currentDestination == destination)
-			currentDestination.OnProgramEnterDestination(this);
+			Run();
 		else
 			currentDestination.OnProgramEnter(this);
 	}
+
+	protected abstract IEnumerator Run();
 }

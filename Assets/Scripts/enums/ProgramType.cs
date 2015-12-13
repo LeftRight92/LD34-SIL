@@ -11,6 +11,32 @@ public enum ProgramType {
 
 public static class ProgramTypeExtension
 {
+	public static GameObject antiMalwarePrefab = Resources.Load("Anti Malware") as GameObject;
+	public static GameObject forkBombPrefab = Resources.Load("ForkBomb") as GameObject;
+	public static GameObject spiderPrefab = Resources.Load("Spider") as GameObject;
+	public static GameObject trojanPrefab = Resources.Load("Trojan") as GameObject;
+	public static GameObject wormPrefab = Resources.Load("Worm") as GameObject;
+
+	public static GameObject GetPrefab(this ProgramType type)
+	{
+		switch (type)
+		{
+			case ProgramType.ANTIMALWARE:
+				return antiMalwarePrefab;
+			case ProgramType.FORKBOMB:
+				return forkBombPrefab;
+			case ProgramType.SPIDER:
+				return spiderPrefab;
+			case ProgramType.TROJAN:
+				return trojanPrefab;
+			case ProgramType.WORM:
+				return wormPrefab;
+			default:
+				Debug.LogError("Invalid enum type");
+				return null;
+		}
+	}
+
 	public static int MemoryUsage(this ProgramType type)
 	{
 		switch (type)
@@ -50,6 +76,12 @@ public static class ProgramTypeExtension
 		}
 	}
 
+	public static int Time(this ProgramType type, int parentCPU)
+	{
+		int t = Time(type);
+		return t - ((t / 10) * (parentCPU - 1));
+    }
+
 	public static int BuildCooldown(this ProgramType type)
 	{
 		switch (type)
@@ -68,6 +100,12 @@ public static class ProgramTypeExtension
 				Debug.LogError("Invalid enum type");
 				return 0;
 		}
+	}
+
+	public static int BuildCooldown(this ProgramType type, int CPU)
+	{
+		int t = BuildCooldown(type);
+		return t - ((t / 10) * (CPU - 1));
 	}
 
 }
