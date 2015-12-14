@@ -6,7 +6,8 @@ public enum NodeType {
 	COMPRESSION,
 	LEARNING_ALGORITHM,
 	ENCRYPTION,
-	BASE
+	BASE,
+	ANTIMALWARE
 }
 
 public static class NodeTypeExtension

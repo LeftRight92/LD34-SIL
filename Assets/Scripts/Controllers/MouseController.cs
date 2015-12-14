@@ -37,11 +37,19 @@ public class MouseController : MonoBehaviour
 			if (hit)
 			{
 				selectedNode = hit.transform.GetComponent<Node>();
-				selectedNode.Explore();
+				GameController.instance.player.Explore(selectedNode);
 			}
-
-
 		}
+	}
+
+	public void RunProgram(ProgramType type)
+	{
+
+	}
+
+	public void RunAlgorithm(NodeType type)
+	{
+
 	}
 
 	void CameraControls()

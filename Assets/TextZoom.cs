@@ -15,7 +15,7 @@ public class TextZoom : MonoBehaviour {
 			GetComponent<MeshRenderer>().enabled = false;
 			Debug.Log("Off");
 		}
-		else if (!(GetComponentInParent<Node>().discovered == Seen.UNDISCOVERED))
+		//else if (!(GetComponentInParent<Node>().discovered == Seen.UNDISCOVERED))
 			GetComponent<MeshRenderer>().enabled = true;
 
 	}

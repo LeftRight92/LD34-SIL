@@ -14,8 +14,10 @@ public class NetworkController : MonoBehaviour {
 	public Vector2 worldDimensions;
 
 	public List<Node> nodes { get; private set; }
-	public Node playerStart;
-	public Node enemyStart;
+	public Node playerStart;// { get; private set; }
+	public Node enemyStart;// { get; private set; }
+
+	
 
 	private Dictionary<Vector3, Vector3> connectedAssuranceLines = new Dictionary<Vector3, Vector3>();
 
@@ -33,9 +35,7 @@ public class NetworkController : MonoBehaviour {
 			ChooseStarts();
 			DrawConnections();
 			foreach (Node n in nodes.Where(n => !(n == playerStart)))
-				n.Disable();
-			playerStart.See();
-			playerStart.Explore();
+				n.HideAtStart();
 			Debug.Log("Ready");
 		}
 		else
@@ -43,10 +43,8 @@ public class NetworkController : MonoBehaviour {
 			nodes = GameObject.FindGameObjectsWithTag("Node").Select(n => n.GetComponent<Node>()).ToList();
 			DrawConnections();
 			foreach (Node n in nodes.Where(n => !(n == playerStart)))
-				n.Disable();
+				n.HideAtStart();
 			if (playerStart == null) Debug.LogError("Player Start node set to null in manual mode");
-			playerStart.See();
-			playerStart.Explore();
 			if (enemyStart == null) Debug.LogError("Enemy Start node set to null in manual mode");
 		}
 		

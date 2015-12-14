@@ -5,13 +5,11 @@ public enum ProgramType {
 	SPIDER,
 	TROJAN,
 	WORM,
-	FORKBOMB,
-	ANTIMALWARE
+	FORKBOMB
 }
 
 public static class ProgramTypeExtension
 {
-	public static GameObject antiMalwarePrefab = Resources.Load("Anti Malware") as GameObject;
 	public static GameObject forkBombPrefab = Resources.Load("ForkBomb") as GameObject;
 	public static GameObject spiderPrefab = Resources.Load("Spider") as GameObject;
 	public static GameObject trojanPrefab = Resources.Load("Trojan") as GameObject;
@@ -21,8 +19,6 @@ public static class ProgramTypeExtension
 	{
 		switch (type)
 		{
-			case ProgramType.ANTIMALWARE:
-				return antiMalwarePrefab;
 			case ProgramType.FORKBOMB:
 				return forkBombPrefab;
 			case ProgramType.SPIDER:
@@ -46,7 +42,6 @@ public static class ProgramTypeExtension
 			case ProgramType.WORM:
 				return 2;
 			case ProgramType.TROJAN:
-			case ProgramType.ANTIMALWARE:
 				return 3;
 			case ProgramType.FORKBOMB:
 				return 4;
@@ -55,8 +50,9 @@ public static class ProgramTypeExtension
 				return 0;
 		}
 	}
+	
 
-	public static int Time(this ProgramType type)
+	public static float Time(this ProgramType type)
 	{
 		switch (type)
 		{
@@ -67,20 +63,23 @@ public static class ProgramTypeExtension
 				return 10;
 			case ProgramType.TROJAN:
 				return 15;
-			case ProgramType.ANTIMALWARE:
-				Debug.LogError("Anti-Malware has no time value");
-				return 0;
 			default:
 				Debug.LogError("Invalid enum type");
 				return 0;
 		}
 	}
 
-	public static int Time(this ProgramType type, int parentCPU)
+	public static float Time(this ProgramType type, int parentCPU)
 	{
-		int t = Time(type);
+		float t = Time(type);
 		return t - ((t / 10) * (parentCPU - 1));
     }
+
+	public static float Time(this ProgramType type, int parentCPU, int learningLevel)
+	{
+		float t = Time(type, parentCPU);
+		return (1 - (learningLevel * 0.1f)) * t;
+	}
 
 	public static int BuildCooldown(this ProgramType type)
 	{
@@ -92,8 +91,6 @@ public static class ProgramTypeExtension
 				return 15;
 			case ProgramType.TROJAN:
 				return 20;
-			case ProgramType.ANTIMALWARE:
-				return 25;
 			case ProgramType.FORKBOMB:
 				return 30;
 			default:

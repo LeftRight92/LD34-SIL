@@ -11,26 +11,29 @@ public abstract class Program : MonoBehaviour {
 	public Team team;// { get; private set; }
 	public ProgramType type { get; protected set; }
 
-	public int compressionLevel = 0;
-	public int learningLevel = 0;
-	public int encryptionLevel = 0;
+	public int compressionLevel { get; private set; }
+	public int learningLevel { get; private set; }
+	public int encryptionLevel { get; private set; }
 
 	public int speed;
 
 	// Use this for initialization
 	void Start () {
+		compressionLevel = 0;
+		learningLevel = 0;
+		encryptionLevel = 0;
 		//TEMPORARY
 		Release();
 	}
 
 	void Appear()
 	{
-		GetComponentInChildren<MeshRenderer>().enabled = true;
+		GetComponent<SpriteRenderer>().enabled = true;
 	}
 
 	void Disappear()
 	{
-		GetComponentInChildren<MeshRenderer>().enabled = false;
+		GetComponent<SpriteRenderer>().enabled = false;
 	}
 
 	public void Release()
@@ -47,17 +50,17 @@ public abstract class Program : MonoBehaviour {
 
 	public void IncreaseCompression()
 	{
-
+		compressionLevel++;
 	}
 
 	public void IncreaseLearning()
 	{
-
+		learningLevel++;
 	}
 
 	public void IncreaseEncryption()
 	{
-
+		encryptionLevel++;
 	}
 
 	IEnumerator Move()

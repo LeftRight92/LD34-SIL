@@ -12,7 +12,7 @@ public class Trojan : Program {
 	{
 		if (destination.hasFirewall)
 		{
-			yield return new WaitForSeconds(type.Time(parent.CPU));
+			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
 			destination.BreakFirewall();
 		}
 		Destroy();

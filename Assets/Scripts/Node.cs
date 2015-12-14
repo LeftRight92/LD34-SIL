@@ -7,8 +7,8 @@ public class Node : MonoBehaviour
 {
 	public string nodeName { get; private set; }
 	public Team team;// { get; private set; }
-	public Seen discovered = Seen.UNDISCOVERED;
 	public NodeType type = NodeType.DEFAULT;
+	public MachineType machineType;
 
 	public int CPU { get; private set; }
 	public int MEM { get; private set; }
@@ -21,9 +21,7 @@ public class Node : MonoBehaviour
 	public List<Edge> edges;
 	public List<Program> programs;
 	public List<Program> queuedPrograms;
-
-
-
+	
 	// Use this for initialization
 	void Start()
 	{
@@ -40,12 +38,15 @@ public class Node : MonoBehaviour
 		else if (NetworkController.instance.enemyStart == this)
 			node = NodeGenerator.GetEnemyNode();
 		else
-			node = NodeGenerator.GenerateNodeStats();
+			node = NodeGenerator.GenerateNodeStats(MachineTypeExtensions.GetRandom());
 		team = node.team;
 		type = node.type;
 		CPU = node.CPU;
 		MEM = node.MEM;
-		name = node.name;
+		nodeName = name = node.name;
+		machineType = node.machineType;
+		GetComponent<SpriteRenderer>().sprite = machineType.GetSprite();
+		if (GetComponent<SpriteRenderer>().sprite == null) Debug.Log("Sprite Failed to load for " + name);
     }
 
 	// Update is called once per frame
@@ -62,10 +63,17 @@ public class Node : MonoBehaviour
 
 	public void OnProgramEnter(Program prg)
 	{
-		if (type == NodeType.DEFAULT || type == NodeType.BASE)
+		if (type == NodeType.DEFAULT ||
+			type == NodeType.ANTIMALWARE || 
+			type == NodeType.BASE)
 			prg.Release();
 		else
-			queuedPrograms.Add(prg);
+		{
+			if (type == NodeType.ENCRYPTION && (prg.type == ProgramType.TROJAN || prg.type == ProgramType.SPIDER))
+				prg.Release();
+			else
+				queuedPrograms.Add(prg);
+		}
 	}
 
 	public void OnProgramEnterDestination(Program prg)
@@ -73,27 +81,13 @@ public class Node : MonoBehaviour
 		//SOME STUFF
 	}
 
-	public void See()
+	public void HideAtStart()
 	{
-		transform.FindChild("Sphere").GetComponent<MeshRenderer>().enabled = true;
-		GetComponent<Collider2D>().enabled = true;
-		discovered = Seen.SEEN;
-	}
-
-	public void Explore()
-	{
-		discovered = Seen.EXPLORED;
-		transform.FindChild("Text").GetComponent<MeshRenderer>().enabled = true;
-		foreach (Node n in neighbours.Where(n => n.discovered != Seen.EXPLORED))
-			n.See();
-		foreach (Edge e in edges) e.GetComponent<LineRenderer>().enabled = true;
-	}
-
-	public void Disable()
-	{
-		foreach (MeshRenderer r in GetComponentsInChildren<MeshRenderer>())
-			r.enabled = false;
+		//PLAYER SPECIFIC (BUT NO MATTER, BECAUSE ONLY CALLED AT START
+		GetComponentInChildren<MeshRenderer>().enabled = false;
 		GetComponent<Collider2D>().enabled = false;
+		GetComponent<SpriteRenderer>().enabled = false;
+		//END PLAYER SPECIFIC
 	}
 
 	public void CreateFirewall()
@@ -130,6 +124,7 @@ public class Node : MonoBehaviour
 		{
 			foreach (Program p in programs)
 				p.Destroy();
+            hasFirewall = false;
 			currentMEM = 0;
 			canBuild = false;
 			this.type = type;
@@ -138,9 +133,7 @@ public class Node : MonoBehaviour
 
 	public void Create(ProgramType type, Node[] path)
 	{
-		if (type == ProgramType.ANTIMALWARE)
-			CreateAntiMalware();
-		else if ((this.type == NodeType.DEFAULT || this.type == NodeType.BASE)
+		if ((this.type == NodeType.DEFAULT || this.type == NodeType.BASE)
 				&& canBuild&& (MEM - type.MemoryUsage()) > 0)
 		{
 			GameObject progObj = Instantiate(type.GetPrefab(), transform.position, Quaternion.identity) as GameObject;
@@ -149,6 +142,7 @@ public class Node : MonoBehaviour
 			prg.destination = path[path.Length - 1];
 			prg.path = path.ToList();
 			prg.team = team;
+			prg.GetComponent<SpriteRenderer>().color = team == Team.PLAYER ? new Color(0.6f, 0.6f, 1) : new Color(1, 0.3f, 0.3f);
 			prg.Release();
 			currentMEM -= type.MemoryUsage();
 			canBuild = false;
@@ -156,49 +150,10 @@ public class Node : MonoBehaviour
 		}
 	}
 
-	public void CreateAntiMalware()
-	{
-		if ((type == NodeType.DEFAULT || this.type == NodeType.BASE)
-				   && canBuild && (MEM - ProgramType.ANTIMALWARE.MemoryUsage()) > 0)
-		{
-			GameObject progObj = Instantiate(ProgramType.ANTIMALWARE.GetPrefab(), transform.position, Quaternion.identity) as GameObject;
-			Program prg = progObj.GetComponent<Program>();
-			prg.parent = this;
-			prg.team = team;
-			prg.Release();
-			currentMEM -= ProgramType.ANTIMALWARE.MemoryUsage(); 
-		}
-	}
-
 	public void Release(Program prg)
 	{
 		programs.Remove(prg);
 		currentMEM += prg.type.MemoryUsage();
-		if(prg.type == ProgramType.ANTIMALWARE)
-		{
-			canBuild = false;
-			buildCooldown = Mathf.Max(buildCooldown, prg.type.BuildCooldown(CPU));
-		}
-	}
-
-	IEnumerator ProcessQueueOther(NodeType asType)
-	{
-		int time = asType.Time();
-		while (type == asType)
-		{
-			if (queuedPrograms.Count != 0)
-			{
-				yield return new WaitForSeconds(time);
-				if (asType == NodeType.COMPRESSION)
-					queuedPrograms[0].compressionLevel += CPU + MEM;
-				else if (asType == NodeType.ENCRYPTION)
-					queuedPrograms[0].encryptionLevel += CPU + MEM;
-				else
-					queuedPrograms[0].learningLevel += CPU + MEM;
-				queuedPrograms[0].Release();
-				queuedPrograms.Remove(queuedPrograms[0]);
-			}
-		}
 	}
 
 	IEnumerator ProcessQueue(NodeType asType)
@@ -210,21 +165,14 @@ public class Node : MonoBehaviour
 			{
 				yield return new WaitForSeconds(time / (CPU + MEM));
 				if (asType == NodeType.COMPRESSION)
-					queuedPrograms[0].compressionLevel++;
+					queuedPrograms[0].IncreaseCompression();
 				else if (asType == NodeType.ENCRYPTION)
-					queuedPrograms[0].encryptionLevel++;
+					queuedPrograms[0].IncreaseEncryption();
 				else
-					queuedPrograms[0].learningLevel++;
+					queuedPrograms[0].IncreaseLearning();
 				queuedPrograms[0].Release();
 				queuedPrograms.Remove(queuedPrograms[0]);
 			}
 		}
-	}
-
-	IEnumerator BeginCooldown(float time)
-	{
-		canBuild = false;
-		yield return new WaitForSeconds(time);
-		canBuild = true;
 	}
 }

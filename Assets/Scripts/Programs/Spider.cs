@@ -9,10 +9,10 @@ public class Spider : Program {
 
 	protected override IEnumerator Run()
 	{
-		if (destination.discovered == Seen.SEEN)
+		if(GameController.instance.playerScript[team].seenNodes.Contains(destination))
 		{
-			yield return new WaitForSeconds(type.Time(parent.CPU));
-			destination.Explore();
+			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
+			GameController.instance.playerScript[team].Explore(destination);
 		}
 		Destroy();
 	}

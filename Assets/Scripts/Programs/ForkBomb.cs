@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 public class ForkBomb : Program {
 	void Start()
@@ -12,9 +11,16 @@ public class ForkBomb : Program {
 	{
 		if (!destination.hasFirewall)
 		{
-			yield return new WaitForSeconds(type.Time(parent.CPU));
-			destination.buildCooldown = (40 - (4 * (destination.CPU - 1)));
-			destination.canBuild = false;
+			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
+			if(destination.team != Team.NONE &&
+				Random.value > (
+				GameController.instance.playerScript[destination.team].ResistanceChance -
+				(encryptionLevel * 0.1f )
+				))
+			{
+				destination.buildCooldown = (40 - (4 * (destination.CPU - 1)));
+				destination.canBuild = false;
+			}
 		}
 		Destroy();
     }
