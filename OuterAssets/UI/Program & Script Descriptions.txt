@@ -1,0 +1,12 @@
+PROGRAMS
+Spider.exe - Probes unexplored devices
+Worm.exe - Assimilates explored devices
+Trojan.exe - Disables firewalls on explored devices
+Firewall.exe - Protects owned devices from attack
+ForkBomb.exe - Forces an explored device to reboot
+
+SCRIPTS
+Compression.sh - Increases the propagation speed of programs
+Learning.sh - Increases the execution speed of programs
+AntiMalware.sh - Increases the detection rate of hostile programs
+Encryption.sh - Decreases the detection rate of programs
