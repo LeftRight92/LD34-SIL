@@ -7,7 +7,7 @@ public class ForkBomb : Program {
 		type = ProgramType.FORKBOMB;
 	}
 
-	protected override IEnumerator Run()
+	protected override IEnumerator RunProgram()
 	{
 		if (!destination.hasFirewall)
 		{

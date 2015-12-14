@@ -105,4 +105,13 @@ public static class ProgramTypeExtension
 		return t - ((t / 10) * (CPU - 1));
 	}
 
+	public static ProgramType FromString(string type)
+	{
+		type = type.ToUpper();
+		if (type == "SPIDER") return ProgramType.SPIDER;
+		if (type == "WORM") return ProgramType.WORM;
+		if (type == "TROJAN") return ProgramType.TROJAN;
+		if (type == "FORKBOMB") return ProgramType.FORKBOMB;
+		throw new System.Exception("EEEEHHHH");
+	}
 }

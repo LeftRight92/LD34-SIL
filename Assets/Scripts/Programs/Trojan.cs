@@ -8,7 +8,7 @@ public class Trojan : Program {
 		type = ProgramType.TROJAN;
 	}
 
-	protected override IEnumerator Run()
+	protected override IEnumerator RunProgram()
 	{
 		if (destination.hasFirewall)
 		{

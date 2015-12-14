@@ -57,7 +57,11 @@ public class Node : MonoBehaviour
 			&& !canBuild)
 		{
 			buildCooldown -= Time.deltaTime;
-			if (buildCooldown < 0) canBuild = true;
+			if (buildCooldown < 0)
+			{
+				canBuild = true;
+				buildCooldown = 0;
+			}
 		}
 	}
 
@@ -96,6 +100,7 @@ public class Node : MonoBehaviour
 		{
 			currentMEM -= 3;
 			hasFirewall = true;
+			transform.FindChild("Firewall").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Firewall");
 		}
 	}
 
@@ -108,6 +113,7 @@ public class Node : MonoBehaviour
 			15 - (1.5f * (CPU - 1))
 			);
 		canBuild = false;
+		transform.FindChild("Firewall").GetComponent<SpriteRenderer>().sprite = null;
 	}
 
 	public void RunAlgorithm(NodeType type)
@@ -129,6 +135,7 @@ public class Node : MonoBehaviour
 			canBuild = false;
 			this.type = type;
 		}
+		transform.FindChild("Algorithm").GetComponent<SpriteRenderer>().sprite = type.GetNodeSprite();
 	}
 
 	public void Create(ProgramType type, Node[] path)
@@ -144,6 +151,7 @@ public class Node : MonoBehaviour
 			prg.team = team;
 			prg.GetComponent<SpriteRenderer>().color = team == Team.PLAYER ? new Color(0.6f, 0.6f, 1) : new Color(1, 0.3f, 0.3f);
 			prg.Release();
+			programs.Add(prg);
 			currentMEM -= type.MemoryUsage();
 			canBuild = false;
 			buildCooldown = Mathf.Max(buildCooldown, type.BuildCooldown(CPU));

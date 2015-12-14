@@ -51,4 +51,39 @@ public static class NodeTypeExtension
 				return 0;
 		}
 	}
+
+	public static Sprite GetNodeSprite(this NodeType type)
+	{
+		Debug.LogWarning("Node Algorithm Sprites not added yet");
+		switch (type)
+		{
+			case NodeType.DEFAULT:
+			case NodeType.BASE:
+				return null;
+			case NodeType.COMPRESSION:
+				return Resources.Load<Sprite>("");
+			case NodeType.LEARNING_ALGORITHM:
+				return Resources.Load<Sprite>("");
+			case NodeType.ENCRYPTION:
+				return Resources.Load<Sprite>("");
+			case NodeType.ANTIMALWARE:
+				return Resources.Load<Sprite>("");
+			default:
+				Debug.LogError("Invalid enum value");
+				return null;
+		}
+	}
+
+	public static NodeType FromString(string type)
+	{
+		type = type.ToUpper();
+		if (type == "DEFAULT") return NodeType.DEFAULT;
+		if (type == "COMPRESSION") return NodeType.COMPRESSION;
+		if (type == "LEARNINGALGORITHM"|| type == "LEARNING ALGORITHM" || type == "LEARNING_ALGORITHM") return NodeType.LEARNING_ALGORITHM;
+		if (type == "ENCRYPTION") return NodeType.ENCRYPTION;
+		if (type == "BASE") return NodeType.BASE;
+		if (type == "ANTIMALWARE") return NodeType.ANTIMALWARE;
+		throw new System.Exception("WAAAH");
+
+	}
 }

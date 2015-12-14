@@ -5,7 +5,7 @@ using System.Linq;
 
 public class HumanPlayerController : PlayerController
 {
-	void Awake()
+	void Start()
 	{
 		team = Team.PLAYER;
 	}

@@ -4,7 +4,7 @@ using System;
 
 public class ComputerPlayerController : PlayerController
 {
-	void Awake()
+	void Start()
 	{
 		team = Team.PLAYER;
 	}

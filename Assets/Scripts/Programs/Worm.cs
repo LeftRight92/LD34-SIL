@@ -7,17 +7,20 @@ public class Worm : Program {
 		type = ProgramType.WORM;
 	}
 
-	protected override IEnumerator Run()
+	protected override IEnumerator RunProgram()
 	{
 		if (!destination.hasFirewall)
 		{
+			Debug.Log("Worm Attacking...");
 			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
-			if (destination.team != Team.NONE &&
+			Debug.Log("Caught by stuff");
+			if (destination.team == Team.NONE ||
 				Random.value > (
 				GameController.instance.playerScript[destination.team].ResistanceChance -
 				(encryptionLevel * 0.1f)
 				))
-			{ 
+			{
+				Debug.Log("Not caught by stuff");
 				if (team == Team.PLAYER)
 				{
 					if(destination.team == Team.ENEMY) GameController.instance.enemy.ownedNodes.Remove(destination);

@@ -78,13 +78,19 @@ public abstract class Program : MonoBehaviour {
 				transform.Translate(step);
 			yield return null;
 		}
+		Debug.Log("Arrived");
 		path.Remove(currentDestination);
 		Disappear();
-		if (currentDestination == destination)
-			Run();
+		Debug.Log(path.Count);
+		//if (currentDestination == destination)
+		if (path.Count == 0)
+		{
+			StartCoroutine(RunProgram());
+		}
 		else
 			currentDestination.OnProgramEnter(this);
 	}
 
-	protected abstract IEnumerator Run();
+	protected abstract IEnumerator RunProgram();
+
 }

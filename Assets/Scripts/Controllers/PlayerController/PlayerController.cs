@@ -6,7 +6,7 @@ using System.Linq;
 public abstract class PlayerController : MonoBehaviour {
 
 	public List<Node> ownedNodes { get; private set; }
-	public List<Node> seenNodes { get; private set; }
+    public List<Node> seenNodes { get; private set; }
 	public List<Node> discoveredNodes { get; private set; }
 	public WinCondition winCondition;
 	protected Team team;
@@ -42,6 +42,21 @@ public abstract class PlayerController : MonoBehaviour {
 	public abstract void See(Node node);
 
 	public abstract void Explore(Node node);
+
+	public void RunProgram(Node node, ProgramType type, Node[] path)
+	{
+		if (ownedNodes.Contains(node)) node.Create(type, path);
+	}
+
+	public void RunAlgorithm(Node node, NodeType type)
+	{
+		if (ownedNodes.Contains(node)) node.RunAlgorithm(type);
+	}
+
+	public void RunFirewall(Node node)
+	{
+		if (ownedNodes.Contains(node)) node.CreateFirewall();
+	}
 }
 
 public delegate bool WinCondition();

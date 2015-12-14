@@ -5,7 +5,7 @@ public static class NodeGenerator{
 
 	public static NodeStats GetPlayerNode()
 	{
-		NodeStats node = new NodeStats(3, 3, "SIL", MachineType.SUPERCOMPUTER);
+		NodeStats node = new NodeStats(3, 3, "S.I.L.", MachineType.SUPERCOMPUTER);
 		node.type = NodeType.BASE;
 		node.team = Team.PLAYER;
 		return node;

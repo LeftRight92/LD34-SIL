@@ -7,8 +7,9 @@ public class Spider : Program {
 		type = ProgramType.SPIDER;
 	}
 
-	protected override IEnumerator Run()
+	protected override IEnumerator RunProgram()
 	{
+		Debug.Log("Spider Exploring...");
 		if(GameController.instance.playerScript[team].seenNodes.Contains(destination))
 		{
 			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));

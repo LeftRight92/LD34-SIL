@@ -17,15 +17,13 @@ public class NetworkController : MonoBehaviour {
 	public Node playerStart;// { get; private set; }
 	public Node enemyStart;// { get; private set; }
 
-	
-
 	private Dictionary<Vector3, Vector3> connectedAssuranceLines = new Dictionary<Vector3, Vector3>();
 
 	void Awake()
 	{
 		instance = this;
 	}
-	// Use this for initialization
+	
 	public void Create() {
 		nodes = new List<Node>();
 		if(AutoMode)
