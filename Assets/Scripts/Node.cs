@@ -37,8 +37,10 @@ public class Node : MonoBehaviour
 			node = NodeGenerator.GetPlayerNode();
 		else if (NetworkController.instance.enemyStart == this)
 			node = NodeGenerator.GetEnemyNode();
-		else
+		else if (NetworkController.instance.AutoMode)
 			node = NodeGenerator.GenerateNodeStats(MachineTypeExtensions.GetRandom());
+		else
+			node = NodeGenerator.GenerateNodeStats(machineType);
 		team = node.team;
 		type = node.type;
 		CPU = node.CPU;

@@ -24,6 +24,7 @@ public abstract class Program : MonoBehaviour {
 		encryptionLevel = 0;
 		//TEMPORARY
 		Release();
+		GetComponent<Animator>().Play(0);
 	}
 
 	void Appear()
