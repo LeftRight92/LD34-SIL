@@ -33,7 +33,7 @@ public class Worm : Program {
 				}
 					
 				destination.team = team;
-				destination.GetComponent<SpriteRenderer>().color = team == Team.PLAYER ? new Color(0.6f, 0.6f, 1) : new Color(1, 0.3f, 0.3f);
+				destination.GetComponent<SpriteRenderer>().color = team.TeamColour();
 				foreach (Program p in destination.programs)
 					p.Destroy();
 				foreach (Program p in destination.queuedPrograms)

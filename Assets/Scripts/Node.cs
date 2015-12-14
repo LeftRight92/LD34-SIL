@@ -25,9 +25,33 @@ public class Node : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		GenerateNode();
+		if (NetworkController.instance.AutoMode)
+			GenerateNode();
+		else
+			ManualNode();
 		GetComponentInChildren<TextMesh>().text = nodeName;
 		currentMEM = MEM;
+	}
+
+	void ManualNode()
+	{
+		NodeStats node;
+		if (NetworkController.instance.playerStart == this)
+			node = NodeGenerator.GetPlayerNode();
+		else if (NetworkController.instance.enemyStart == this)
+			node = NodeGenerator.GetEnemyNode();
+		else
+			node = NodeGenerator.GenerateNodeStats(machineType);
+		type = node.type;
+		CPU = node.CPU;
+		MEM = node.MEM;
+		nodeName = node.name;
+		if (hasFirewall)
+		{
+			currentMEM = Mathf.Max(0, currentMEM - 3);
+			transform.FindChild("Firewall").GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Firewall");
+		}
+		GetComponent<SpriteRenderer>().sprite = machineType.GetSprite();
 	}
 
 	void GenerateNode()
@@ -37,10 +61,8 @@ public class Node : MonoBehaviour
 			node = NodeGenerator.GetPlayerNode();
 		else if (NetworkController.instance.enemyStart == this)
 			node = NodeGenerator.GetEnemyNode();
-		else if (NetworkController.instance.AutoMode)
+		else 
 			node = NodeGenerator.GenerateNodeStats(MachineTypeExtensions.GetRandom());
-		else
-			node = NodeGenerator.GenerateNodeStats(machineType);
 		team = node.team;
 		type = node.type;
 		CPU = node.CPU;
@@ -48,7 +70,6 @@ public class Node : MonoBehaviour
 		nodeName = name = node.name;
 		machineType = node.machineType;
 		GetComponent<SpriteRenderer>().sprite = machineType.GetSprite();
-		if (GetComponent<SpriteRenderer>().sprite == null) Debug.Log("Sprite Failed to load for " + name);
     }
 
 	// Update is called once per frame
@@ -100,11 +121,10 @@ public class Node : MonoBehaviour
 
 	public void CreateFirewall()
 	{
-		if ((type == NodeType.DEFAULT || type == NodeType.BASE) && canBuild&& currentMEM > 3)
+		if ((type == NodeType.DEFAULT || type == NodeType.BASE) && canBuild&& currentMEM >= 3)
 		{
 			currentMEM -= 3;
 			hasFirewall = true;
-			transform.FindChild("Firewall").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Firewall");
 			transform.FindChild("Firewall").GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Firewall");
 		}
 	}
@@ -112,12 +132,13 @@ public class Node : MonoBehaviour
 	public void BreakFirewall()
 	{
 		hasFirewall = false;
-		currentMEM += 3;
+		currentMEM = Mathf.Min(currentMEM + 3, MEM);
 		buildCooldown = Mathf.Max(
 			buildCooldown,
 			15 - (1.5f * (CPU - 1))
 			);
 		canBuild = false;
+		transform.FindChild("Firewall").GetComponent<Animator>().runtimeAnimatorController = null;
 		transform.FindChild("Firewall").GetComponent<SpriteRenderer>().sprite = null;
 	}
 

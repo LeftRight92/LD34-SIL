@@ -41,7 +41,10 @@ public class NetworkController : MonoBehaviour {
 			nodes = GameObject.FindGameObjectsWithTag("Node").Select(n => n.GetComponent<Node>()).ToList();
 			DrawConnections();
 			foreach (Node n in nodes.Where(n => !(n == playerStart)))
+			{
+				n.GetComponent<SpriteRenderer>().color = n.team.TeamColour();
 				n.HideAtStart();
+			}
 			if (playerStart == null) Debug.LogError("Player Start node set to null in manual mode");
 			if (enemyStart == null) Debug.LogError("Enemy Start node set to null in manual mode");
 		}

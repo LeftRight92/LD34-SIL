@@ -86,13 +86,13 @@ public static class ProgramTypeExtension
 		switch (type)
 		{
 			case ProgramType.SPIDER:
-				return 10;
+				return 3;
 			case ProgramType.WORM:
-				return 15;
+				return 5;
 			case ProgramType.TROJAN:
-				return 20;
+				return 8;
 			case ProgramType.FORKBOMB:
-				return 30;
+				return 12;
 			default:
 				Debug.LogError("Invalid enum type");
 				return 0;

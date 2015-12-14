@@ -21,11 +21,11 @@ public static class NodeTypeExtension
 				Debug.LogWarning("Default or Base attempted to request runtime.");
 				return 0;
 			case NodeType.COMPRESSION:
-				return 5;
+				return 2;
             case NodeType.ENCRYPTION:
-				return 10;
+				return 5;
 			case NodeType.LEARNING_ALGORITHM:
-				return 15;
+				return 7;
 			default:
 				Debug.LogError("Invalid enum type");
 				return 0;
@@ -82,7 +82,7 @@ public static class NodeTypeExtension
 		if (type == "ENCRYPTION") return NodeType.ENCRYPTION;
 		if (type == "BASE") return NodeType.BASE;
 		if (type == "ANTIMALWARE") return NodeType.ANTIMALWARE;
-		throw new System.Exception("WAAAH");
+		throw new System.Exception("NodeType.FromString " + type);
 
 	}
 }

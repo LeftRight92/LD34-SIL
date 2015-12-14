@@ -91,13 +91,16 @@ public class UIController : MonoBehaviour {
 			else
 				foreach (GameObject g in programListElements) g.SetActive(false);
 			GetElement("Text Canvas", "Cooldown Time").GetComponent<Text>().text =
-				mouseController.selectedNode.buildCooldown.ToString();
+				(GameController.instance.player.discoveredNodes.Contains(node) ?
+				node.buildCooldown.ToString() : "?");
 			GetElement("Text Canvas", "Processes").GetComponent<Text>().text =
-				CreateProcessesList(mouseController.selectedNode);
+				CreateProcessesList(node);
 			GetElement("Text Canvas", "MEM Amount").GetComponent<Text>().text =
-				mouseController.selectedNode.currentMEM.ToString() + "/" + mouseController.selectedNode.MEM.ToString();
+				(GameController.instance.player.discoveredNodes.Contains(node) ?
+				node.currentMEM.ToString() : "?") + "/" + node.MEM.ToString();
 			GetElement("Text Canvas", "Firewall Status").GetComponent<Text>().text =
-				mouseController.selectedNode.hasFirewall ? "ENABLED" : "DISABLED";
+				GameController.instance.player.discoveredNodes.Contains(node) ?
+				(node.hasFirewall ? "ENABLED" : "DISABLED") : "UNKNOWN";
 			GetElement("Text Canvas", "CPU Amount").GetComponent<Text>().text =
 				node.CPU.ToString();
 		}
@@ -110,11 +113,11 @@ public class UIController : MonoBehaviour {
 
 	void DisplayPrograms(Node node)
 	{
-		if (node.MEM >= ProgramType.SPIDER.MemoryUsage()) GetElement("Text Canvas", "Spider Text").gameObject.SetActive(true);
-		if (node.MEM >= ProgramType.WORM.MemoryUsage()) GetElement("Text Canvas", "Worm Text").gameObject.SetActive(true);
-		if (node.MEM >= ProgramType.TROJAN.MemoryUsage()) GetElement("Text Canvas", "Trojan Text").gameObject.SetActive(true);
-		if (node.MEM >= ProgramType.FORKBOMB.MemoryUsage()) GetElement("Text Canvas", "ForkBomb Text").gameObject.SetActive(true);
-		if (node.MEM >= 3) GetElement("Text Canvas", "Firewall Text").gameObject.SetActive(true);
+		if (node.currentMEM >= ProgramType.SPIDER.MemoryUsage()) GetElement("Text Canvas", "Spider Text").gameObject.SetActive(true);
+		if (node.currentMEM >= ProgramType.WORM.MemoryUsage()) GetElement("Text Canvas", "Worm Text").gameObject.SetActive(true);
+		if (node.currentMEM >= ProgramType.TROJAN.MemoryUsage()) GetElement("Text Canvas", "Trojan Text").gameObject.SetActive(true);
+		if (node.currentMEM >= ProgramType.FORKBOMB.MemoryUsage()) GetElement("Text Canvas", "ForkBomb Text").gameObject.SetActive(true);
+		if (node.currentMEM >= 3) GetElement("Text Canvas", "Firewall Text").gameObject.SetActive(true);
 	}
 	
 	string CreateProcessesList(Node node)

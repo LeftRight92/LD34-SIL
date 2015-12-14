@@ -31,7 +31,7 @@ public class MouseController : MonoBehaviour
 	void Update()
 	{
 		CameraControls();
-
+		if (Input.GetMouseButtonDown(1)) pathingMode = false;
 		if (Input.GetMouseButtonDown(0) && !UIHit())
 			if (pathingMode)
 				TryAddNode();
@@ -121,8 +121,10 @@ public class MouseController : MonoBehaviour
 
 	public void RunAlgorithm(string type)
 	{
-		if (type.ToUpper() == "FIREWALL") GameController.instance.player.RunFirewall(selectedNode);
-		RunAlgorithm(NodeTypeExtension.FromString(type));
+		if (type.ToUpper() == "FIREWALL")
+			GameController.instance.player.RunFirewall(selectedNode);
+		else
+			RunAlgorithm(NodeTypeExtension.FromString(type));
 	}
 
 	void CameraControls()
