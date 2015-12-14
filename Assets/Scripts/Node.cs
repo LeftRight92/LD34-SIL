@@ -136,8 +136,9 @@ public class Node : MonoBehaviour
 			currentMEM = 0;
 			canBuild = false;
 			this.type = type;
+			StartCoroutine(ProcessQueue(type));
 		}
-		transform.FindChild("Algorithm").GetComponent<SpriteRenderer>().sprite = type.GetNodeSprite();
+		transform.FindChild("Algorithm").GetComponent<Animator>().runtimeAnimatorController = type.GetNodeAnimation();
 	}
 
 	public void Create(ProgramType type, Node[] path)
@@ -183,6 +184,7 @@ public class Node : MonoBehaviour
 				queuedPrograms[0].Release();
 				queuedPrograms.Remove(queuedPrograms[0]);
 			}
+			yield return null;
 		}
 	}
 }

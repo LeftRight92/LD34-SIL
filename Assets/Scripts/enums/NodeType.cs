@@ -52,22 +52,21 @@ public static class NodeTypeExtension
 		}
 	}
 
-	public static Sprite GetNodeSprite(this NodeType type)
+	public static RuntimeAnimatorController GetNodeAnimation(this NodeType type)
 	{
-		Debug.LogWarning("Node Algorithm Sprites not added yet");
 		switch (type)
 		{
 			case NodeType.DEFAULT:
 			case NodeType.BASE:
 				return null;
 			case NodeType.COMPRESSION:
-				return Resources.Load<Sprite>("");
+				return Resources.Load<RuntimeAnimatorController>("Compression");
 			case NodeType.LEARNING_ALGORITHM:
-				return Resources.Load<Sprite>("");
+				return Resources.Load<RuntimeAnimatorController>("Learning");
 			case NodeType.ENCRYPTION:
-				return Resources.Load<Sprite>("");
+				return Resources.Load<RuntimeAnimatorController>("Encryption");
 			case NodeType.ANTIMALWARE:
-				return Resources.Load<Sprite>("");
+				return Resources.Load<RuntimeAnimatorController>("AntiMalware");
 			default:
 				Debug.LogError("Invalid enum value");
 				return null;

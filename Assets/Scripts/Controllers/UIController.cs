@@ -9,10 +9,8 @@ public class UIController : MonoBehaviour {
 	private MouseController mouseController;
 
 	public int ProcessesLines = 3;
-	public int RemoteConsoleLines = 10;
 
 	private GameObject[] infoPanelElements;
-	private GameObject[] remoteConsoleElements;
 	private GameObject[] programTextElements;
 	private GameObject[] scriptTextElements;
 	private GameObject[] programListElements;
@@ -29,11 +27,6 @@ public class UIController : MonoBehaviour {
 			GetElement("Text Canvas", "Processes").gameObject,
 			GetElement("Window Canvas", "SystemInformation").gameObject
 		};
-		remoteConsoleElements = new GameObject[]
-		{
-			GetElement("Text Canvas", "RemoteConsole").gameObject,
-			GetElement("Window Canvas", "RemoteConsole").gameObject
-        };
 		programTextElements = new GameObject[]
 		{
 			GetElement("Text Canvas", "Spider Text").gameObject,
@@ -97,17 +90,13 @@ public class UIController : MonoBehaviour {
 		if (node != null)
 		{
 			foreach (GameObject g in infoPanelElements) g.SetActive(true);
-			foreach (GameObject g in remoteConsoleElements) g.SetActive(true);
 			foreach (GameObject g in programListElements) g.SetActive(true);
 			GetElement("Text Canvas", "CPU Amount").GetComponent<Text>().text =
-				node.CPU.ToString();
-			GetElement("Text Canvas", "RemoteConsole").GetComponent<Text>().text =
 				node.CPU.ToString();
 		}
 		else
 		{
 			foreach (GameObject g in infoPanelElements) g.SetActive(false);
-			foreach (GameObject g in remoteConsoleElements) g.SetActive(false);
 			foreach (GameObject g in programListElements) g.SetActive(false);
 		}
 	}
@@ -137,10 +126,5 @@ public class UIController : MonoBehaviour {
 
 		}
 		return text;
-	}
-
-	void AddConsoleLog()
-	{
-
 	}
 }

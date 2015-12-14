@@ -61,7 +61,7 @@ public class MouseController : MonoBehaviour
 				}
 				else
 				{
-					if (!player.ownedNodes.Contains(hitNode))
+					if (!player.ownedNodes.Contains(hitNode) && player.discoveredNodes.Contains(hitNode))
 					{
 						pathingMode = false;
 						player.RunProgram(selectedNode, prgType, path.ToArray());
@@ -115,7 +115,7 @@ public class MouseController : MonoBehaviour
 
 	public void RunProgram(string type)
 	{
-		Debug.Log("Runing Program: " + type.ToString());
+		Debug.Log("Runing Program: " + type);
 		RunProgram(ProgramTypeExtension.FromString(type));
 	}
 
