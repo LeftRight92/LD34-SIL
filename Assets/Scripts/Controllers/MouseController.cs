@@ -90,13 +90,13 @@ public class MouseController : MonoBehaviour
 		if (hit)
 		{
 			selectedNode = hit.transform.GetComponent<Node>();
-			UIController.instance.UpdateDisplay(selectedNode);
+			//UIController.instance.UpdateDisplay(selectedNode);
 			//GameController.instance.player.Explore(selectedNode);
 		}
 		else
 		{
 			selectedNode = null;
-			UIController.instance.UpdateDisplay(null);
+			//UIController.instance.UpdateDisplay(null);
 		}
 	}
 

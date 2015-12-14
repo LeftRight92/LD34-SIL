@@ -15,10 +15,11 @@ public class HumanPlayerController : PlayerController
 		discoveredNodes.Add(node);
 		foreach (Node n in node.neighbours.Where(n => !discoveredNodes.Contains(n)))
 			See(n);
-		//PLAYER SPECIFIC
 		foreach (Edge e in node.edges) e.GetComponent<LineRenderer>().enabled = true;
 		node.transform.FindChild("Text").GetComponent<MeshRenderer>().enabled = true;
-		//END PLAYER SPECIFIC
+		node.transform.FindChild("Firewall").GetComponent<SpriteRenderer>().enabled = true;
+		node.transform.FindChild("Algorithm").GetComponent<SpriteRenderer>().enabled = true;
+		
 	}
 
 	public override void See(Node node)

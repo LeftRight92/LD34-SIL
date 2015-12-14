@@ -89,10 +89,12 @@ public class Node : MonoBehaviour
 
 	public void HideAtStart()
 	{
-		//PLAYER SPECIFIC (BUT NO MATTER, BECAUSE ONLY CALLED AT START
-		GetComponentInChildren<MeshRenderer>().enabled = false;
+		//PLAYER SPECIFIC (BUT NO MATTER, BECAUSE ONLY CALLED AT START)
 		GetComponent<Collider2D>().enabled = false;
 		GetComponent<SpriteRenderer>().enabled = false;
+		transform.FindChild("Firewall").GetComponent<SpriteRenderer>().enabled = false;
+		transform.FindChild("Algorithm").GetComponent<SpriteRenderer>().enabled = false;
+		transform.FindChild("Text").GetComponent<MeshRenderer>().enabled = false;
 		//END PLAYER SPECIFIC
 	}
 
@@ -103,6 +105,7 @@ public class Node : MonoBehaviour
 			currentMEM -= 3;
 			hasFirewall = true;
 			transform.FindChild("Firewall").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Firewall");
+			transform.FindChild("Firewall").GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Firewall");
 		}
 	}
 
@@ -144,7 +147,7 @@ public class Node : MonoBehaviour
 	public void Create(ProgramType type, Node[] path)
 	{
 		if ((this.type == NodeType.DEFAULT || this.type == NodeType.BASE)
-				&& canBuild&& (MEM - type.MemoryUsage()) > 0)
+				&& canBuild&& (MEM - type.MemoryUsage()) >= 0)
 		{
 			GameObject progObj = Instantiate(type.GetPrefab(), transform.position, Quaternion.identity) as GameObject;
 			Program prg = progObj.GetComponent<Program>();

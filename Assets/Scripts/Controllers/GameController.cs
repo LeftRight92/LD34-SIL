@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
 		enemyStart.GetComponent<SpriteRenderer>().color = new Color(1, 0.3f, 0.3f);
 		enemy.winCondition = EnemyTakeSIL;
 
-		UIController.instance.UpdateDisplay(null);
+		//UIController.instance.UpdateDisplay(null);
 	}
 
 	// Update is called once per frame
