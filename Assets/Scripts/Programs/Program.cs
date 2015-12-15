@@ -8,6 +8,8 @@ public abstract class Program : MonoBehaviour {
 	public Node destination;
 	public List<Node> path;
 
+	protected float waitTime;
+
 	public Team team;// { get; private set; }
 	public ProgramType type { get; protected set; }
 
@@ -27,9 +29,14 @@ public abstract class Program : MonoBehaviour {
 		GetComponent<Animator>().Play(0);
 	}
 
+	void Update()
+	{
+		if (waitTime > 0) waitTime -= GameTime.deltaTime;
+	}
+
 	void Appear()
 	{
-		GetComponent<SpriteRenderer>().enabled = true;
+		if(team == Team.PLAYER) GetComponent<SpriteRenderer>().enabled = true;
 	}
 
 	void Disappear()
@@ -39,6 +46,7 @@ public abstract class Program : MonoBehaviour {
 
 	public void Release()
 	{
+		if (team == Team.ENEMY) GetComponent<SpriteRenderer>().enabled = false;
 		Appear();
 		StartCoroutine(Move());
 	}
@@ -70,7 +78,7 @@ public abstract class Program : MonoBehaviour {
 		while(transform.position != currentDestination.transform.position)
 		{
 			Vector3 step = (currentDestination.transform.position - transform.position).normalized *
-				Time.deltaTime *
+				GameTime.deltaTime *
 				speed *
 				(1 + (0.25f * compressionLevel));
 			if (step.magnitude > (currentDestination.transform.position - transform.position).magnitude)

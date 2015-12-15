@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameController : MonoBehaviour
 {
@@ -44,14 +45,12 @@ public class GameController : MonoBehaviour
 		enemyStart.GetComponent<SpriteRenderer>().color = new Color(1, 0.3f, 0.3f);
 		enemy.winCondition = EnemyTakeSIL;
 
+		if (GetComponent<SimpleAI>() != null)
+			GetComponent<SimpleAI>().StartAI();
+
 		//UIController.instance.UpdateDisplay(null);
 	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
+	
 
 	public void GameOver(Team team)
 	{

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Worm : Program {
 	void Start()
@@ -12,7 +13,8 @@ public class Worm : Program {
 		if (!destination.hasFirewall)
 		{
 			Debug.Log("Worm Attacking...");
-			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
+			waitTime = type.Time(parent.CPU, learningLevel);
+			while (waitTime > 0) yield return null;
 			Debug.Log("Caught by stuff");
 			if (destination.team == Team.NONE ||
 				Random.value > (
@@ -34,10 +36,12 @@ public class Worm : Program {
 					
 				destination.team = team;
 				destination.GetComponent<SpriteRenderer>().color = team.TeamColour();
-				foreach (Program p in destination.programs)
-					p.Destroy();
-				foreach (Program p in destination.queuedPrograms)
-					p.Destroy();
+				destination.programs = new List<Program>();
+				destination.queuedPrograms = new List<Program>();
+				//foreach (Program p in destination.programs)
+				//	p.Destroy();
+				//foreach (Program p in destination.queuedPrograms)
+				//	p.Destroy();
 				if (destination.type != NodeType.BASE)
 					destination.type = NodeType.DEFAULT;
 			}

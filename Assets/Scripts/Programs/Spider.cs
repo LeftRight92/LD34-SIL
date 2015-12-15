@@ -12,7 +12,8 @@ public class Spider : Program {
 		Debug.Log("Spider Exploring...");
 		if(GameController.instance.playerScript[team].seenNodes.Contains(destination))
 		{
-			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
+			waitTime = type.Time(parent.CPU, learningLevel);
+			while (waitTime > 0) yield return null;
 			GameController.instance.playerScript[team].Explore(destination);
 		}
 		Destroy();

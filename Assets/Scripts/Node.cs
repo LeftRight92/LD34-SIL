@@ -21,6 +21,8 @@ public class Node : MonoBehaviour
 	public List<Edge> edges;
 	public List<Program> programs;
 	public List<Program> queuedPrograms;
+
+	float processQueueWaitTime = 0;
 	
 	// Use this for initialization
 	void Start()
@@ -75,11 +77,12 @@ public class Node : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (processQueueWaitTime > 0) processQueueWaitTime -= GameTime.deltaTime;
 		foreach (Node n in neighbours) Debug.DrawLine(transform.position, n.transform.position);
 		if ((type == NodeType.DEFAULT || type == NodeType.BASE) 
 			&& !canBuild)
 		{
-			buildCooldown -= Time.deltaTime;
+			buildCooldown -= GameTime.deltaTime;
 			if (buildCooldown < 0)
 			{
 				canBuild = true;
@@ -154,13 +157,12 @@ public class Node : MonoBehaviour
 		}
 		else
 		{
-			foreach (Program p in programs)
-				p.Destroy();
+			programs = new List<Program>();
             hasFirewall = false;
 			currentMEM = 0;
 			canBuild = false;
 			this.type = type;
-			StartCoroutine(ProcessQueue(type));
+			if(type != NodeType.ANTIMALWARE) StartCoroutine(ProcessQueue(type));
 		}
 		transform.FindChild("Algorithm").GetComponent<Animator>().runtimeAnimatorController = type.GetNodeAnimation();
 	}
@@ -198,7 +200,8 @@ public class Node : MonoBehaviour
 		{
 			if (queuedPrograms.Count != 0)
 			{
-				yield return new WaitForSeconds(time / (CPU + MEM));
+				processQueueWaitTime = time / (CPU + MEM);
+				while (processQueueWaitTime > 0) yield return null;
 				if (asType == NodeType.COMPRESSION)
 					queuedPrograms[0].IncreaseCompression();
 				else if (asType == NodeType.ENCRYPTION)

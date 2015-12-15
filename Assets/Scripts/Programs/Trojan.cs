@@ -12,7 +12,8 @@ public class Trojan : Program {
 	{
 		if (destination.hasFirewall)
 		{
-			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
+			waitTime = type.Time(parent.CPU, learningLevel);
+			while (waitTime > 0) yield return null;
 			destination.BreakFirewall();
 		}
 		Destroy();

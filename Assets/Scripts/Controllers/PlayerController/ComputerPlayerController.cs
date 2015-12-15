@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Linq;
 
 public class ComputerPlayerController : PlayerController
 {
@@ -11,11 +12,13 @@ public class ComputerPlayerController : PlayerController
 
 	public override void Explore(Node node)
 	{
-		//throw new NotImplementedException();
+		discoveredNodes.Add(node);
+		foreach (Node n in node.neighbours.Where(n => !discoveredNodes.Contains(n)))
+			See(n);
 	}
 
 	public override void See(Node node)
 	{
-		//throw new NotImplementedException();
+		seenNodes.Add(node);
 	}
 }

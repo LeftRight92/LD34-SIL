@@ -11,8 +11,9 @@ public class ForkBomb : Program {
 	{
 		if (!destination.hasFirewall)
 		{
-			yield return new WaitForSeconds(type.Time(parent.CPU, learningLevel));
-			if(destination.team != Team.NONE &&
+			waitTime = type.Time(parent.CPU, learningLevel);
+			while (waitTime > 0) yield return null;
+			if (destination.team != Team.NONE &&
 				Random.value > (
 				GameController.instance.playerScript[destination.team].ResistanceChance -
 				(encryptionLevel * 0.1f )

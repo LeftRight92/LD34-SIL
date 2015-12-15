@@ -34,7 +34,7 @@ public class NetworkController : MonoBehaviour {
 			DrawConnections();
 			foreach (Node n in nodes.Where(n => !(n == playerStart)))
 				n.HideAtStart();
-			Debug.Log("Ready");
+			//Debug.Log("Ready");
 		}
 		else
 		{
@@ -96,7 +96,7 @@ public class NetworkController : MonoBehaviour {
 				//Collect all nodes not connected to the main graph
 				HashSet<Node> notConnected = new HashSet<Node>(nodes);
 				notConnected.ExceptWith(connected);
-				Debug.Log("Running Not Connected branch, size: " + notConnected.Count);
+				//Debug.Log("Running Not Connected branch, size: " + notConnected.Count);
 				//Take any node
 				Node anyNode = notConnected.ToArray()[0];
 				//Add a new neighbour from the connected graph
@@ -123,7 +123,7 @@ public class NetworkController : MonoBehaviour {
 					}
 			}
 			front = newFront;
-			Debug.Log("New front: " + front.Count);
+			//Debug.Log("New front: " + front.Count);
 		}
 	}
 

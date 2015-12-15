@@ -119,6 +119,17 @@ public class UIController : MonoBehaviour {
 		if (node.currentMEM >= ProgramType.FORKBOMB.MemoryUsage()) GetElement("Text Canvas", "ForkBomb Text").gameObject.SetActive(true);
 		if (node.currentMEM >= 3) GetElement("Text Canvas", "Firewall Text").gameObject.SetActive(true);
 	}
+
+	public void DisplayConsole(bool disp)
+	{
+		GetElement("Window Canvas", "LocalConsole").gameObject.SetActive(disp);
+		GetElement("Text Canvas", "Local Console").gameObject.SetActive(disp);
+	}
+
+	public Text GetConsoleTextElement()
+	{
+		return GetElement("Text Canvas", "Local Console").GetComponent<Text>();
+	}
 	
 	string CreateProcessesList(Node node)
 	{

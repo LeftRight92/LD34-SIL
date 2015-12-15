@@ -15,7 +15,7 @@ public static class MachineTypeExtensions
 	public static MachineType GetRandom()
 	{
 		float r = Random.value;
-		if (r < 0.25f)
+		if (r < 0.10f)
 			return MachineType.SMARTPHONE;
 		else if(r < 0.45f)
             return MachineType.DESKTOPPC;

@@ -18,7 +18,8 @@ public static class NodeTypeExtension
 		{
 			case NodeType.DEFAULT:
 			case NodeType.BASE:
-				Debug.LogWarning("Default or Base attempted to request runtime.");
+			case NodeType.ANTIMALWARE:
+				Debug.LogWarning("Default, Antimalware or Base attempted to request runtime.");
 				return 0;
 			case NodeType.COMPRESSION:
 				return 2;
