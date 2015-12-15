@@ -55,6 +55,7 @@ public class GameController : MonoBehaviour
 	public void GameOver(Team team)
 	{
 		Debug.Log("GAME OVER, WINNER: " + team);
+		BroadcastMessage("GameFinish", team.ToString());
 	}
 
 	bool PlayerTakeAll()

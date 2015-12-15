@@ -25,19 +25,15 @@ public class SimpleAI : MonoBehaviour {
 		if (waitTime > 0) waitTime -= GameTime.deltaTime;
 		if(waitTime <= 0 && go && alive)
 		{
-			Debug.Log("AI ROUND @" + Time.time);
 			List<Node> chosenNodes = new List<Node>();
 			if (controller.ownedNodes.Count == 0) alive = false;
-			Debug.Log("Current Nodes: " + controller.ownedNodes.Count);
 			int desiredNodes = Mathf.CeilToInt(controller.ownedNodes.Count * 0.66f);
-			Debug.Log("Desired Nodes: " + desiredNodes);
 			for (int x = 0; x < controller.ownedNodes.Count; x++)
 				if (Random.value < (desiredNodes / (controller.ownedNodes.Count - x)))
 				{
 					desiredNodes--;
 					chosenNodes.Add(controller.ownedNodes[x]);
 				}
-			Debug.Log("Nodes Chosen: " + chosenNodes.Count());
 			foreach (Node n in chosenNodes)
 			{
 				if (Random.value < 0.01f) n.CreateFirewall();
@@ -49,7 +45,6 @@ public class SimpleAI : MonoBehaviour {
 				if (o.Count != 0)
 				{
 					Node p = o.First();
-					Debug.Log("Sending Trojan");
 					if (n.type == NodeType.ANTIMALWARE) n.RunAlgorithm(NodeType.DEFAULT);
 					controller.RunProgram(n, ProgramType.TROJAN, new Node[] { p });
 					break;
@@ -61,7 +56,6 @@ public class SimpleAI : MonoBehaviour {
 				if (o.Count != 0)
 				{
 					Node p = o.First();
-					Debug.Log("Sending Worm");
 					controller.RunProgram(n, ProgramType.WORM, new Node[] { p });
 					break;
 				}
@@ -71,7 +65,6 @@ public class SimpleAI : MonoBehaviour {
 				if (o.Count != 0)
 				{
 					Node p = o.First();
-					Debug.Log("Sending Spider");
 					controller.RunProgram(n, ProgramType.SPIDER, new Node[] { p });
 					break;
 				}

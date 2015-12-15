@@ -45,7 +45,10 @@ public abstract class PlayerController : MonoBehaviour {
 
 	public void RunProgram(Node node, ProgramType type, Node[] path)
 	{
-		if (ownedNodes.Contains(node)) node.Create(type, path);
+		if (ownedNodes.Contains(node))
+		{
+			node.Create(type, path);
+		}
 	}
 
 	public void RunAlgorithm(Node node, NodeType type)

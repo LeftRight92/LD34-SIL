@@ -169,9 +169,11 @@ public class Node : MonoBehaviour
 
 	public void Create(ProgramType type, Node[] path)
 	{
+		Debug.Log("Call received");
 		if ((this.type == NodeType.DEFAULT || this.type == NodeType.BASE)
 				&& canBuild&& (MEM - type.MemoryUsage()) >= 0)
 		{
+			Debug.Log("Going ahead");
 			GameObject progObj = Instantiate(type.GetPrefab(), transform.position, Quaternion.identity) as GameObject;
 			Program prg = progObj.GetComponent<Program>();
 			prg.parent = this;
