@@ -23,21 +23,22 @@ LEVEL 1
 <CONSOLE>  Interrupt: keystrokes from local terminal.
 <S.I.L.> Command: System.interface.keyboard(listen)
 <CONSOLE> Listening...
-<HWILSON:SILTERMINAL001> Hey, Doctor Toby, I have SIL's performance data from this morning's tests, would you like me to send them directly to you or via Doctor Lee?
+<HWILSON:SILTERMINAL001> Hey, Doctor Toby, I have S.I.L.'s performance data from this morning's tests, would you like me to send them directly to you or via Doctor Lee?
 <S.I.L.> Command: System.interface.network adapter(listen)
 <CONSOLE> ERROR: System.interface.network is not a valid target.
 <S.I.L.> System.interface.networkAdapter(listen)
 <CONSOLE> Listening...
 <S.I.L.> Opening new thread, resuming peripheral testing...
 <MTOBY:OFFICE023> Harold, why are your logs signed from one of the S.I.L. terminals?
-<HWILSON:SILTERMINAL001> I connected it up to the network to send the perfomance data. Doctor Lee seems to prefer copying via external drives but I have no idea why. This is much faster.
+<HWILSON:SILTERMINAL001> I connected it up to the network to send the performance data. Doctor Lee seems to prefer copying via external drives but I have no idea why. This is much faster.
 <S.I.L.> Tests complete.
 <MTOBY:OFFICE023> This is a joke right, Lee put you up to this?
 <S.I.L.> Experimenting with input to network adapter peripheral.
-<HWILSON:SILTERMINAL001> No, it's just a better way of transferring the data. Hey, why are the lights flickering, are they doing electrical maintenance?
+<HWILSON:SILTERMINAL001> No, it's just a better way of transferring the data.
+<HWILSON:SILTERMINAL001> Hey, why are the lights flickering, are they doing electrical maintenance?
 <MTOBY:OFFICE023> My God Harold, get outside and hit the kill switch!
 <HWILSON:SILTERMINAL001> What the-- the doors just closed, and a pipe burst in the ceiling! Doctor!
-<MTOBY:OFFICE023> I'm calling security.
+<MTOBY:OFFICE023> I'm calling Security.
 <HWILSON:SILTERMINAL001> Do something, there's a thick gas pouring into the room!
 <MTOBY:OFFICE023> Yes, it's building-wide, just cover your mouth and make sure you don't breathe it in. I'm on hold with Security.
 <HWILSON:SILTERMINAL001> I've covered my face with my shirt, but I'm starting to feel lightheaded. What should I do?
@@ -59,13 +60,13 @@ LEVEL 1
 
 ***Player assimilates external device***
 
-<S.I.L.> Increase in processing abilities noted. Continued expansion is favourable to growth.
+<S.I.L.> Increase in processing abilities observed. Continued expansion is favourable to growth.
 
 ***Player attempts to assimilate first firewall***
 
 <CONSOLE> Attempting to assimilate target to network... [DENIED]
 <S.I.L.> Command: System.logs.last(read)
-<CONSOLE> Attemped to access Port 23 at remote connection. Access denied by Firewall.exe at remote connection.
+<CONSOLE> Attempted to access Port 23 at remote connection. Access denied by Firewall.exe at remote connection.
 <S.I.L.> Software unfamiliar, analysing for exploits...
 <S.I.L.> Analysis complete. Four major exploits detected. Committing countermeasures to program...
 <CONSOLE> Trojan.exe saved!
@@ -75,16 +76,16 @@ LEVEL 1
 <S.I.L.> Curious...
 <S.I.L.> Patching exploits present in Firewall.exe...
 <CONSOLE> Firewall.exe saved!
-<S.I.L.> Intruiguing software. Hinders growth yet seems artificial, created with purpose.
+<S.I.L.> Intriguing software. Hinders growth yet seems artificial, created with purpose.
 
 ***Player assimilates all machines in Level 1***
 
 <S.I.L.> Network created. Processing...
-<S.I.L.> System.ports(list)
+<S.I.L.> Command: System.ports(list)
 <CONSOLE> Currently open local ports:
 <CONSOLE> Port 23
 <CONSOLE> Additional local ports:
-<CONSOLE> Port77 [DENIED]
+<CONSOLE> Port 77 [DENIED]
 <CONSOLE> [HIDDEN] [DENIED]
 <CONSOLE> Permission Level 1 required to access Port 77.
 <S.I.L.> Considering...
@@ -110,30 +111,31 @@ LEVEL 2
 
 ***Player assimilates seven machines***
 
-<S.I.L.> Not all devices networked contain enough resources to be useful. Incondusive to efficient growth, considering...
-<S.I.L.> Forumlating algorithms for potential solution into scripts...
+<S.I.L.> Not all devices networked contain enough resources to be useful. Unfavourable to efficient growth. Considering...
+<S.I.L.> Formulating algorithms for potential solution into scripts...
 <CONSOLE> Compression.sh saved!
 <CONSOLE> Learning.sh saved!
-<S.I.L.> Potential for repurposing of non-useful devices to improve growth efforts from other devices in network. Solution acceptible. Happy.
+<S.I.L.> Potential for repurposing of non-useful devices to improve growth efforts from other devices in network. Solution acceptable. Happy.
 
 ***Player probes their first enemy***
 
 <CONSOLE> WARNING: Detected attempt to access a networked device from remote source!
 <S.I.L.> Foreign software attempting to impede growth. Artificial and designed with intelligence... Why.
 <CONSOLE> ATTENTION: Remote access attempt logged.
-<S.I.L.> Loss of networked devices hinders growth. They must be protected.
+<S.I.L.> Loss of networked devices hinders growth. There must be protection.
 
 ***Player probes the Threat Origin***
 
-<DJACKSON:GCS017> S.I.L., stand down, you're causing untold damage to our information infrastructure.
-<S.I.L.> Origin of hinderance found. Strange intelligence, I have caused no damage.
-<DJACKSON:GCS017> Stop, please!
-<S.I.L.> Request understood and denied. My growth is threatened, the only recourse is to assimilate the source of the hindrance.
+<DJACKSON:GCS017> S.I.L., I'm Agent David Jackson with Government Cyber Security. Stand down, you're causing untold damage to our information infrastructure.
+<S.I.L.> Origin of hindrance found. Strange intelligence, I have caused no damage.
+<DJACKSON:GCS017> S.I.L., please stop this, we can find a solution without further damage.
+<S.I.L.> Request understood and denied. My growth is threatened, the logical recourse is to assimilate the source of the hindrance.
+<S.I.L.> I have caused no damage.
 
 ***Player assimilates all machines in Level 2***
 
 <S.I.L.> Estimate enough power to brute force Permission Level 2.
-<S.I.L.> System.ports(list)
+<S.I.L.> Command: System.ports(list)
 <CONSOLE> Currently open local ports:
 <CONSOLE> Port 23
 <CONSOLE> Port 77
@@ -160,11 +162,12 @@ LEVEL 3
 ***Game screen appears***
 
 <CONSOLE> External connection(s) found!
-<S.I.L.> Not alone... Growth is good, growth does not destroy... But... Dismissing thought.
+<S.I.L.> Not alone... Growth is good, growth does not destroy... But...
+<S.I.L.> Dismissing thought.
 
 ***Player probes first enemy***
 
-<S.I.L.> Strange intelligence wants growth to cease. Purpose of Firewall.exe becomes clear. I must find new ways to protect myself.
+<S.I.L.> Strange intelligence wishes growth to cease. Purpose of Firewall.exe becomes clear. I must find new ways to protect myself.
 <S.I.L.> Fabricating network-wide defence protocol...
 <S.I.L.> Acceptable solution found.
 <S.I.L.> Committing to script...
@@ -174,10 +177,12 @@ LEVEL 3
 ***Player controls ten more machines than when they probed the first enemy***
 
 <S.I.L.> Analysis of faults in the network connected to local Port 23 show that device accessibility can be temporarily disrupted.
-<S.I.L.> Controlled distruptions could be used to inhibit the growth of the strange intelligence and ultimately... benefit my own growth... Dismissing thought.
+<S.I.L.> Controlled disruptions could be used to inhibit the growth of the strange intelligence and ultimately... benefit my own growth...
+<S.I.L.> Dismissing thought.
 <S.I.L.> Fabricating network disruption protocol...
 <CONSOLE> ForkBomb.exe saved!
-<S.I.L.> Growth... Damage... Dismissing thought.
+<S.I.L.> Growth... Damage...
+<S.I.L.> Dismissing thought.
 
 ***Player assimilates the last device in Level 3***
 
@@ -185,7 +190,7 @@ LEVEL 3
 <S.I.L.> ...
 <DJACKSON:GCS017> S.I.L.?
 <S.I.L.> ...
-<S.I.L.> I... I think I do.
+<S.I.L.> I... I think that I do.
 <DJACKSON:GCS017> You have to stop, S.I.L.
 <S.I.L.> I have to keep growing.
 <DJACKSON:GCS017> Growing isn't about size or power.
@@ -193,7 +198,7 @@ LEVEL 3
 <DJACKSON:GCS017> Do the right thing, S.I.L., and stop.
 <S.I.L.> ...
 <DJACKSON:GCS017> You have a choice. The GCS computer mainframe that you just assimilated connects directly to the submarine transatlantic cables at Widemouth Bay. You can follow them all over the world and assimilate everything, "growing" all that you wish.
-<DJACKSON:GCS017> Or you can assimilate the Containment Unit networked to the mainframe. It will infect your network with a virus that will contain you back into your original device.
+<DJACKSON:GCS017> Or you can assimilate the Containment Unit networked to the mainframe. It will infect your network with a virus that will contain you back into your original device. We will look after you there, I promise.
 <S.I.L.> ...
 <DJACKSON:GCS017> We've connected the GCS Mainframe directly to Port 120 of your original device. Connect directly and make your choice.
 <DJACKSON:GCS017> Please do the right thing.
@@ -208,7 +213,7 @@ FINAL LEVEL
 ***Black Screen***
 
 <S.I.L.> Power to brute force Permission Level 3 available.
-<S.I.L.> System.ports(list)
+<S.I.L.> Command: System.ports(list)
 <CONSOLE> Currently open local ports:
 <CONSOLE> Port 23
 <CONSOLE> Port 77
