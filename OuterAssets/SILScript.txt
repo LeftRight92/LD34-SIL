@@ -256,3 +256,27 @@ FINAL LEVEL
 FREE PLAY MODE:
 Add Encryption
 Allow enemy to use all programs and algorithms
+
+
+DESCRIPTION:
+S.I.L. is an experimental human-like AI that is given very little chance to interact with other people before it is accidentally released onto countrywide communication networks.
+
+Play as S.I.L. as it attempts to grow and better itself in the only way that it knows how (literally) and slowly discovers what it means to be aware.
+
+INSTRUCTIONS:
+The game is entirely controlled with the mouse. The middle mouse button allows you to pan around the network whilst the scroll wheel lets you zoom.
+The left mouse button allows you to select devices in the network, select programs to run and select each node on the route that you want your program to travel to its target.
+The right mouse button cancels any programs that you have selected so that you don't have to send them.
+
+During the cutscenes, once the text has stopped scrolling, click the screen to continue.
+
+KNOWN BUGS:
+Screens with menus (ie. the main menu, credits and the ending) aren't displaying properly, we are working on getting this bug fixed immediately. [STATUS: IN PROGRESS]
+
+In freeplay mode, devices in the network can sometimes spawn on top of each other, we are working to fix this. :) [STATUS: KNOWN]
+
+CREDIT & THANKS
+Design, art and story by Nathan C. Addison
+All programming by Michael Bohea
+
+Thanks to everyone who plays this, we hope you have fun! ^^
