@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class UIController : MonoBehaviour {
 
@@ -15,11 +15,16 @@ public class UIController : MonoBehaviour {
 	private GameObject[] scriptTextElements;
 	private GameObject[] programListElements;
 
+	public List<ProgramType> programDisabled;
+	public List<NodeType> algorithmDisabled;
+	public bool firewall;
+
 	void Awake()
 	{
 		instance = this;
 		infoPanelElements = new GameObject[]
 		{
+			GetElement("Text Canvas", "Name").gameObject,
 			GetElement("Text Canvas", "CPU Amount").gameObject,
 			GetElement("Text Canvas", "MEM Amount").gameObject,
 			GetElement("Text Canvas", "Firewall Status").gameObject,
@@ -79,17 +84,23 @@ public class UIController : MonoBehaviour {
 			if(GameController.instance.player.ownedNodes.Contains(node))
 			{
 				if(NetworkController.instance.playerStart != node)
-					foreach (GameObject g in scriptTextElements) g.SetActive(true);
+					foreach (GameObject g in scriptTextElements) g.GetComponent<CampaignUISwitch>().SetEnable(true);
 				else
-					foreach (GameObject g in scriptTextElements) g.SetActive(false);
+					foreach (GameObject g in scriptTextElements) g.GetComponent<CampaignUISwitch>().SetEnable(false);
 				if (node.buildCooldown <= 0)
 					DisplayPrograms(node);
 				else
-					foreach (GameObject g in programTextElements) g.SetActive(false);
+					foreach (GameObject g in programTextElements) g.GetComponent<CampaignUISwitch>().SetEnable(false);
 				GetElement("Window Canvas", "ProgramList").gameObject.SetActive(true);
 			}
 			else
 				foreach (GameObject g in programListElements) g.SetActive(false);
+			GetElement("Text Canvas", "Name").GetComponent<Text>().text =
+				(GameController.instance.player.discoveredNodes.Contains(node) ?
+				node.nodeName : "Unknown"
+				) + " - " + 
+				((NetworkController.instance.playerStart == node) ?
+				"Self" : node.team.AsString());
 			GetElement("Text Canvas", "Cooldown Time").GetComponent<Text>().text =
 				(GameController.instance.player.discoveredNodes.Contains(node) ?
 				node.buildCooldown.ToString() : "?");
@@ -113,11 +124,16 @@ public class UIController : MonoBehaviour {
 
 	void DisplayPrograms(Node node)
 	{
-		if (node.currentMEM >= ProgramType.SPIDER.MemoryUsage()) GetElement("Text Canvas", "Spider Text").gameObject.SetActive(true);
-		if (node.currentMEM >= ProgramType.WORM.MemoryUsage()) GetElement("Text Canvas", "Worm Text").gameObject.SetActive(true);
-		if (node.currentMEM >= ProgramType.TROJAN.MemoryUsage()) GetElement("Text Canvas", "Trojan Text").gameObject.SetActive(true);
-		if (node.currentMEM >= ProgramType.FORKBOMB.MemoryUsage()) GetElement("Text Canvas", "ForkBomb Text").gameObject.SetActive(true);
-		if (node.currentMEM >= 3) GetElement("Text Canvas", "Firewall Text").gameObject.SetActive(true);
+		if (node.currentMEM >= ProgramType.SPIDER.MemoryUsage())
+			GetElement("Text Canvas", "Spider Text").gameObject.GetComponent<CampaignUISwitch>().SetEnable(true);
+		if (node.currentMEM >= ProgramType.WORM.MemoryUsage())
+			GetElement("Text Canvas", "Worm Text").gameObject.GetComponent<CampaignUISwitch>().SetEnable(true);
+		if (node.currentMEM >= ProgramType.TROJAN.MemoryUsage())
+			GetElement("Text Canvas", "Trojan Text").gameObject.GetComponent<CampaignUISwitch>().SetEnable(true);
+		if (node.currentMEM >= ProgramType.FORKBOMB.MemoryUsage())
+			GetElement("Text Canvas", "ForkBomb Text").gameObject.GetComponent<CampaignUISwitch>().SetEnable(true);
+		if (node.currentMEM >= 3)
+			GetElement("Text Canvas", "Firewall Text").gameObject.GetComponent<CampaignUISwitch>().SetEnable(true); ;
 	}
 
 	public void DisplayConsole(bool disp)

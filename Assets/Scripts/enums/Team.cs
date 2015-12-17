@@ -24,4 +24,18 @@ public static class TeamExtensions
 				return Color.white;
 		}
 	}
+
+	public static string AsString(this Team team)
+	{
+		switch(team){
+			case Team.PLAYER:
+				return "Owned";
+			case Team.ENEMY:
+				return "Hostile";
+			case Team.NONE:
+				return "Neutral";
+			default:
+				return "";
+		}
+	}
 }

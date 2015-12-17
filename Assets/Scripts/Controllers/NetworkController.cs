@@ -53,17 +53,33 @@ public class NetworkController : MonoBehaviour {
 
 	private void CreateNodes()
 	{
-		for (int x = 0; x < maxNodes; x++)
-			nodes.Add(((GameObject)
+		for (int x = 1; x < maxNodes; x++) {
+			Node n = ((GameObject)
 				Instantiate(nodePrefab,
 					new Vector3(
 						Random.Range(-(worldDimensions.x / 2), worldDimensions.x / 2),
 						Random.Range(-(worldDimensions.y / 2), worldDimensions.y / 2),
 						0
 					),
-					Quaternion.identity)
-				).
-			GetComponent<Node>());
+					Quaternion.identity
+				)
+			).GetComponent<Node>();
+			while (Physics2D.OverlapCircleAll(n.transform.position, 0.3f).Count() > 1)
+			{
+				Destroy(n.gameObject);
+				n = ((GameObject)
+					Instantiate(nodePrefab,
+						new Vector3(
+							Random.Range(-(worldDimensions.x / 2), worldDimensions.x / 2),
+							Random.Range(-(worldDimensions.y / 2), worldDimensions.y / 2),
+							0
+						),
+						Quaternion.identity
+					)
+				).GetComponent<Node>();
+			}
+			nodes.Add(n);
+		}
 		foreach (Node n in nodes)
 			n.transform.parent = transform;
 	}

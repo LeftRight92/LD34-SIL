@@ -7,6 +7,9 @@ public class Level3Manage : MonoBehaviour {
 
 	int state = 0;
 	int networkSize = 0;
+
+	public CampaignUISwitch forkBomb;
+	public CampaignUISwitch antiMalware;
 	// Use this for initialization
 	void Start () {
 	
@@ -24,18 +27,20 @@ public class Level3Manage : MonoBehaviour {
 			ConsoleHandler.instance.RunConsoleSequence(state);
 			state++;
 		}
-		if(GameController.instance.player.discoveredNodes.Where(x => x == NetworkController.instance.enemyStart).Any()
+		if(GameController.instance.player.discoveredNodes.Where(x => GameController.instance.enemy.ownedNodes.Contains(x)).Any()
 			&& state == 2)
 		{
 			ConsoleHandler.instance.RunConsoleSequence(state);
 			state++;
 			networkSize = GameController.instance.player.ownedNodes.Count();
+			antiMalware.SetActive();
 		}
 
 		if(GameController.instance.player.ownedNodes.Count() > networkSize + 10 && state == 3)
 		{
 			ConsoleHandler.instance.RunConsoleSequence(state);
 			state++;
+			forkBomb.SetActive();
 		}
 		if (GameController.instance.player.ownedNodes.Count == (NetworkController.instance.nodes.Count) && state == 5)
 		{
@@ -43,6 +48,6 @@ public class Level3Manage : MonoBehaviour {
 			state++;
 		}
 		if (state == 6 && GameTime.pause == false)
-			SceneManager.LoadScene("Freeplay");
+			SceneManager.LoadScene("Level4");
 	}
 }

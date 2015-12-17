@@ -32,11 +32,7 @@ public class Level1Manage : MonoBehaviour {
         }
 		if(state == 4)
 		{
-			//spiderText.GetComponent<RectTransform>().position = new Vector3(
-			//	1475.5f,
-			//	spiderText.transform.position.y,
-			//	spiderText.transform.position.z
-			//);
+			spiderText.GetComponent<CampaignUISwitch>().SetActive();
 		}
 		if (state == 5 && GameController.instance.player.discoveredNodes.Count > 1)
 		{
@@ -44,11 +40,7 @@ public class Level1Manage : MonoBehaviour {
 			state++;
 			GameController.instance.player.winCondition = () => { return false; };
 			GameController.instance.enemy.winCondition = () => { return false; };
-			//wormText.GetComponent<RectTransform>().position = new Vector3(
-			//	1475.5f,
-			//	wormText.transform.position.y,
-			//	wormText.transform.position.z
-			//);
+			wormText.GetComponent<CampaignUISwitch>().SetActive();
 		}
 		if(state == 6 && GameController.instance.player.ownedNodes.Count > 1)
 		{
@@ -60,21 +52,13 @@ public class Level1Manage : MonoBehaviour {
 			ConsoleHandler.instance.RunConsoleSequence(state);
 			state++;
 			magicNodes = GameController.instance.player.ownedNodes.Count;
-			//trojanText.GetComponent<RectTransform>().position = new Vector3(
-			//	1475.5f,
-			//	trojanText.transform.position.y,
-			//	trojanText.transform.position.z
-			//);
+			trojanText.GetComponent<CampaignUISwitch>().SetActive();
 		}
 		if(state == 8 && GameController.instance.player.ownedNodes.Count > magicNodes)
 		{
 			ConsoleHandler.instance.RunConsoleSequence(state);
 			state++;
-			//firewallText.GetComponent<RectTransform>().position = new Vector3(
-			//	1475.5f,
-			//	firewallText.transform.position.y,
-			//	firewallText.transform.position.z
-			//);
+			firewallText.GetComponent<CampaignUISwitch>().SetActive();
 		}
 		if(state == 9)
 		{

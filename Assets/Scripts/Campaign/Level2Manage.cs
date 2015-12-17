@@ -7,6 +7,10 @@ public class Level2Manage : MonoBehaviour {
 
 	int state = 0;
 
+	public CampaignUISwitch compression;
+	public CampaignUISwitch learning;
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -28,6 +32,8 @@ public class Level2Manage : MonoBehaviour {
 		{
 			ConsoleHandler.instance.RunConsoleSequence(state);
 			state++;
+			compression.SetActive();
+			learning.SetActive();
 		}
 		if (GameController.instance.player.discoveredNodes.Where(x => GameController.instance.enemy.ownedNodes.Contains(x)).Any()
 			&& state == 3)

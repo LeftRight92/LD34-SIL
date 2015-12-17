@@ -5,7 +5,7 @@ using System.Collections;
 
 public class Node : MonoBehaviour
 {
-	public string nodeName { get; private set; }
+	public string nodeName { get; set; }
 	public Team team;// { get; private set; }
 	public NodeType type = NodeType.DEFAULT;
 	public MachineType machineType;
@@ -169,11 +169,9 @@ public class Node : MonoBehaviour
 
 	public void Create(ProgramType type, Node[] path)
 	{
-		Debug.Log("Call received");
 		if ((this.type == NodeType.DEFAULT || this.type == NodeType.BASE)
 				&& canBuild&& (MEM - type.MemoryUsage()) >= 0)
 		{
-			Debug.Log("Going ahead");
 			GameObject progObj = Instantiate(type.GetPrefab(), transform.position, Quaternion.identity) as GameObject;
 			Program prg = progObj.GetComponent<Program>();
 			prg.parent = this;

@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
 
+	public bool isCampaign = true;
+	private bool gameOver = false;
 	public static GameController instance;
 	public PlayerController player;
 	public PlayerController enemy;
@@ -50,12 +53,29 @@ public class GameController : MonoBehaviour
 
 		//UIController.instance.UpdateDisplay(null);
 	}
+
+	void Update()
+	{
+		if(gameOver && ConsoleHandler.instance.done)
+		{
+			SceneManager.LoadScene("MainMenu");
+		}
+	}
 	
 
 	public void GameOver(Team team)
 	{
-		Debug.Log("GAME OVER, WINNER: " + team);
-		BroadcastMessage("GameFinish", team.ToString());
+		if(!isCampaign)
+			if(team == Team.PLAYER)
+			{
+				transform.FindChild("FreeplayController").GetComponent<ConsoleHandler>().RunConsoleSequence(0);
+				gameOver = true;
+			}
+			else
+			{
+				transform.FindChild("FreeplayController").GetComponent<ConsoleHandler>().RunConsoleSequence(1);
+				gameOver = true;
+			}
 	}
 
 	bool PlayerTakeAll()

@@ -42,11 +42,12 @@ public class ConsoleHandler : MonoBehaviour {
 			foreach(char c in s)
 			{
 				text.text += c;
-				//yield return new WaitForSeconds(0.001f);
+				//yield return new WaitForSeconds(0.01f);
 			}
 			text.text += '\n';
-			yield return new WaitForSeconds(0.1f);
+			//yield return new WaitForSeconds(1f);
 		}
 		done = true;
+		yield return null;
 	}
 }
